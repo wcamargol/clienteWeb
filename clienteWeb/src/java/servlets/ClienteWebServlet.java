@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import controller.Client;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import javax.servlet.RequestDispatcher;
@@ -12,8 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
-import model.Mensagem;
 
 /**
  *
@@ -49,20 +48,17 @@ public class ClienteWebServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        Cliente cliente = new Cliente();
-        Mensagem mensagem = new Mensagem();
+        
         String comando =null,
-            retorno = null;
-        if(cliente.inicializar()){
-            comando = request.getParameter("comando");
-            if (comando != null){
-                mensagem.setMsg(comando);
-                cliente.enviar(mensagem);
-                retorno = cliente.buscarRetorno();
-                request.setAttribute("eqto", retorno.subSequence(0, 4));
-                request.setAttribute("estado", retorno.substring(7));
-            }
+        retorno = null;
+        comando = request.getParameter("comando");
+        if (comando != null){            
+            Client cliente = new Client();                
+            retorno = cliente.enviaComando(comando);
+            request.setAttribute("eqto", retorno.subSequence(0, 4));
+            request.setAttribute("estado", retorno.substring(7));
         }
+        
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request,response);
     }
