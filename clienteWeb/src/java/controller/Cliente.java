@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 
-public class Client{
+public class Cliente{
 
     private Socket connSocket;
 
-    public Client(){
+    public Cliente(){
         try {
             this.connSocket = new Socket("127.0.0.1", 12345);
         } catch (IOException ex) {

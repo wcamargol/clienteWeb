@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package servlets;
+package controller.servlets;
 
-import controller.Client;
+import controller.Cliente;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import javax.servlet.RequestDispatcher;
@@ -53,9 +53,9 @@ public class ClienteWebServlet extends HttpServlet {
         retorno = null;
         comando = request.getParameter("comando");
         if (comando != null){            
-            Client cliente = new Client();                
+            Cliente cliente = new Cliente();                
             retorno = cliente.enviaComando(comando);
-            request.setAttribute("eqto", retorno.subSequence(0, 4));
+            request.setAttribute("eqto", comando.subSequence(0, 4));
             request.setAttribute("estado", retorno.substring(7));
         }
         

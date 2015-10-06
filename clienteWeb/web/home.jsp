@@ -1,4 +1,4 @@
-<%-- 
+<%--
 ********************************************************************************
 
     Document   : home
@@ -7,7 +7,7 @@
 
 ********************************************************************************
 
-Código html original retirado de http://www.freeliquidtemplates.com/ e adaptado 
+Código adaptado do original disponível em http://www.freeliquidtemplates.com/ e adaptado 
 para jsp.
 
 Esta página permitira o acesso ao sistema de automação Safe and Smart House
@@ -37,13 +37,16 @@ String comando,operacao, estado;
             <li><a href="#">Sala</a>
                 <ul>
                     <%
-                    if ((request.getAttribute("estado") == null) || 
-                            (request.getAttribute("estado").equals("Desligado"))){
-                        comando = "SL01L2";
-                        operacao = "Ligar";
-                    }else{
-                        comando = "SL01D2";
-                        operacao = "Desligar";
+                    if (request.getAttribute("eqto").equals("SL01")){                        
+                        if (request.getAttribute("estado").equals("Desligado")
+                            ||
+                            (request.getAttribute("estado") == null)) {
+                            comando = "SL01L2";
+                            operacao = "Ligar";
+                        }else{
+                            comando = "SL01D2";
+                            operacao = "Desligar";
+                        }
                     }
                     %> 
                     <li><a href="ClienteWebServlet?comando=<%=comando%>"><%=operacao%> Ilumina&ccedil;&atilde;o</a></li>                     

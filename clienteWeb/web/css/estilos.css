@@ -1,11 +1,7 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+
 /* 
-    Created on : 09/09/2015, 07:00:53
-    Author     : Walter Luiz de Camargo - 434094
+    Código adaptado do original disponível em http://www.freeliquidtemplates.com/
+    Autor: Walter Luiz de Camargo
 */
 
 * {
@@ -22,16 +18,15 @@ body {
     font-style: normal;
     font-weight: normal;
     color: #333333;
-    background:#2e2e2e
-    //background: #ffffff
+    background:#2e2e2e;
+    background: #ffffff;
 }
 
 h1 , h2 {
     padding: .5% 5%;
-    font-weight: lighter
+    font-weight: lighter;
 }
 
-/* Set up structure and drop down menu */
 header {
     width: 90%;
     float: left;
@@ -41,16 +36,13 @@ header {
 
 header h1 {
     font-size: 24px;
-    float: left;
     color: #fefefe;
-    text-shadow: none
 }
 
 .slogan {
     font-size: 30px;
     font-style: oblique;
     color: goldenrod;
-    text-shadow: none;
 }
 
 nav {
@@ -61,19 +53,11 @@ nav {
     margin: 1% 5% 
 }
 
-/*  horizontal navbar  */
 .hnavbar{
     list-style:none;
-    margin-bottom: 0;
-    float:left;
-    position:relative;
-    z-index:5;
 }
 
 .hnavbar li{
-    float:left;
-    margin-right:10px;
-    margin-bottom: 0px;
     position:relative;
 }
 
@@ -85,12 +69,6 @@ nav {
     text-decoration:none;
 }
 
-.hnavbar a:hover{
-    text-decoration:none;
-    border: solid #0e0e0e 1px;
-}
-
-/*--- DROPDOWN ---*/
 .hnavbar ul{
     list-style:none;
     position:absolute;
@@ -98,12 +76,8 @@ nav {
 }
 
 .hnavbar ul li{
-    padding-top: 0px;
-    float:none;
     width: 150%;    
 }
-
-.hnavbar ul a{white-space:nowrap;}
 
 .hnavbar li:hover ul{left:0;}
 
@@ -112,82 +86,17 @@ nav {
     text-decoration:none;
 }
 
-//.hnavbar li:hover ul a{text-decoration:none;}
-
 .hnavbar li:hover ul li a:hover{background:#696969;}
 
-//.hnavbar li a:hover{background:#696969;}
-
-.main {
-    width: 80%;
-    padding: 0 10%;
-    float: left;
-}
-
-footer {
-    width: 100%;
-    background: #2e2e2e;
-    float: left
-}
-
-/* Define text elements */
-.main h1 {
-    font-size : 24px;
-    text-align : center;
-    color : #000001;
-    margin: 1% 0 
-}
-
-.main h2 {
-    font-size : 22px;
-    text-align : center;
-    color : #696969;
-    margin: 1% 0
-}
-
-.main p {
-    text-align : left;
-    text-indent : 16px ;
-    margin: 1% 0
-}
-
-.main p.clear {clear:both}
-
-footer p {
-    text-align : center;
-    color: #fefefe;
-    padding: 2% 0
-} 
-
-footer p a , footer p a:visited {color: #c0c0c0}
-
-/* Media Queries for web page adjustments */
-@media all and (max-width:1440px) {
-    .image1 {display: none} /* Hide image1 */
-    .image2 {display: block;
-        float: right
-    } /* Show image2 and float it*/
-}
-
-@media all and (max-width:1280px) {
-    body {font-size:18px}
-    .image2 {display: none} /* Hide image2 */
-    .image3 {display: block;
-        float: right
-    } /* Show image3 and float it */
-}
+/* 
+ * Ajustes conforme o tamanho da tela
+ */
 
 @media all and (max-width:1024px) {
     .main h1 {font-size:24px}
     .main h2 , .right h2 {font-size:20px}
 }
 
-@media all and (max-width:850px) {
-    .image3 {display: none}
-    .image4 {display:block;
-        float: right
-    }
-}
 @media all and (max-width:768px) {
     body {font-size: 16px;}
     header h1 {font-size: 22px}
@@ -202,7 +111,7 @@ footer p a , footer p a:visited {color: #c0c0c0}
 
 @media all and (max-width: 480px) {
     .main {display: none}
-    header ,  nav , .hnavbar , .hnavbar li ul /*,footer*/  {
+    header ,  nav , .hnavbar , .hnavbar li ul{
         width: 90% !important;
         display: block !important;
         padding:0 5% !important;
@@ -222,12 +131,4 @@ footer p a , footer p a:visited {color: #c0c0c0}
     }
     .hnavbar li a {padding: 5% 0;}
     .hnavbar li ul {z-index: 10}
-    .image4{display: none;}/* hide image4 */
-    .image3 { /* show image3 */
-        float: none; /* Remove float property - important for centering */
-        display: block;
-        max-width: 96%;
-        margin: 2% auto;
-        clear: both
-    }
 }
