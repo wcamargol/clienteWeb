@@ -7,6 +7,7 @@ package model.dao;
 
 import java.util.List;
 import model.beans.Evento;
+import model.beans.EventoId;
 import model.beans.FabricaConexoes;
 import model.dao.interfaces.EventoDAO;
 import org.hibernate.HibernateException;
@@ -22,14 +23,14 @@ public class EventoMySQLDAO implements EventoDAO {
     
     private Session session;
     
-    public Evento recuperar(Evento id) {
+    public Evento recuperar(EventoId id) {
         Evento evento = null;
         if(id != null){
             session = FabricaConexoes.getInstance();
-            Query q = session.createQuery("select a from Evento a where a.id.evento.codigoAlarme = ? "
+            Query q = session.createQuery("select a from Evento a where a.id.alarme.codigoAlarme = ? "
                 + "and a.id.equipamento.codigoEquipamento = ? ");
-            q.setString(0, id.getId().getAlarme().getCodigoAlarme());
-            q.setString(1, id.getId().getEquipamento().getCodigoEquipamento());
+            q.setString(0, id.getAlarme().getCodigoAlarme());
+            q.setString(1, id.getEquipamento().getCodigoEquipamento());
             List l = q.list();
             if (!l.isEmpty()){
                evento = (Evento)l.get(0);
