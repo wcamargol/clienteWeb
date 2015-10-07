@@ -1,35 +1,34 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Evento;
-import model.beans.EventoId;
-import model.dao.interfaces.EventoDAO;
+import model.beans.Operacao;
+import model.beans.OperacaoId;
+import model.dao.interfaces.OperacaoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class EventoMySQLDAO implements EventoDAO {
-    
+public class OperacaoMySQLDAO implements OperacaoDAO {
     private Session session;
     
-    public Evento recuperar(EventoId id) {
-        Evento evento = null;
+    public Operacao recuperar(OperacaoId id) {
+        Operacao evento = null;
         if(id != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Evento a where a.id.alarme.codigoAlarme = ? "
+            Query q = session.createQuery("select a from Operacao a where a.id.morador.login = ? "
                 + "and a.id.equipamento.codigoEquipamento = ? ");
-            q.setString(0, id.getAlarme().getCodigoAlarme());
+            q.setString(0, id.getMorador().getLogin());
             q.setString(1, id.getEquipamento().getCodigoEquipamento());
             List l = q.list();
             if (!l.isEmpty()){
-               evento = (Evento)l.get(0);
+               evento = (Operacao)l.get(0);
             }
         }
         return evento;
     }
     
-    public boolean atualizar(Evento evento) {
+    public boolean atualizar(Operacao evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -50,7 +49,7 @@ public class EventoMySQLDAO implements EventoDAO {
     }
 
     
-    public boolean salvar(Evento evento) {
+    public boolean salvar(Operacao evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -70,7 +69,7 @@ public class EventoMySQLDAO implements EventoDAO {
         return sucesso;   
     }
     
-    public boolean apagar(Evento evento) {
+    public boolean apagar(Operacao evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -88,5 +87,5 @@ public class EventoMySQLDAO implements EventoDAO {
             }
         }
         return sucesso;
-    }    
+    } 
 }

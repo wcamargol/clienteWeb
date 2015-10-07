@@ -1,42 +1,57 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Evento;
-import model.beans.EventoId;
-import model.dao.interfaces.EventoDAO;
+import model.beans.Morador;
+import model.dao.interfaces.MoradorDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class EventoMySQLDAO implements EventoDAO {
-    
+public class MoradorMySQLDAO implements MoradorDAO {
     private Session session;
     
-    public Evento recuperar(EventoId id) {
-        Evento evento = null;
-        if(id != null){
+    public Morador recuperar(Morador login){
+        Morador morador = null;
+        if(morador != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Evento a where a.id.alarme.codigoAlarme = ? "
-                + "and a.id.equipamento.codigoEquipamento = ? ");
-            q.setString(0, id.getAlarme().getCodigoAlarme());
-            q.setString(1, id.getEquipamento().getCodigoEquipamento());
+            Query q = session.createQuery("select a from Morador a where a.login = ?");
+            q.setString(0, login.getLogin());
             List l = q.list();
             if (!l.isEmpty()){
-               evento = (Evento)l.get(0);
+               morador = (Morador)l.get(0);
             }
         }
-        return evento;
+        return morador;
     }
     
-    public boolean atualizar(Evento evento) {
+    public boolean atualizar(Morador morador){
         boolean sucesso = false;
-        if(evento != null){
+        if(morador != null){
             session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.update(evento);
+                session.update(morador);
+                tx.commit();
+                sucesso = true;                
+            }catch(HibernateException ex){
+                ex.printStackTrace();
+                tx.rollback();
+            }finally{
+                session.close();
+            }
+        }
+        return sucesso;    
+    }
+    public boolean salvar(Morador morador){
+        boolean sucesso = false;
+        if(morador != null){
+            session = FabricaMySQLDAO.getSession();
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                session.save(morador);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){
@@ -48,36 +63,14 @@ public class EventoMySQLDAO implements EventoDAO {
         }
         return sucesso;            
     }
-
-    
-    public boolean salvar(Evento evento) {
+    public boolean apagar(Morador morador){
         boolean sucesso = false;
-        if(evento != null){
+        if(morador != null){
             session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.save(evento);
-                tx.commit();
-                sucesso = true;                
-            }catch(HibernateException ex){
-                ex.printStackTrace();
-                tx.rollback();
-            }finally{
-                session.close();
-            }
-        }
-        return sucesso;   
-    }
-    
-    public boolean apagar(Evento evento) {
-        boolean sucesso = false;
-        if(evento != null){
-            session = FabricaMySQLDAO.getSession();
-            Transaction tx = null;
-            try{
-                tx = session.beginTransaction();
-                session.delete(evento);
+                session.delete(morador);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){

@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.dao;
 
 import java.util.List;
 import model.beans.Alarme;
-import model.beans.FabricaConexoes;
 import model.dao.interfaces.AlarmeDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -20,7 +14,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
     public Alarme recuperar(Alarme codigo){
         Alarme alarme = null;
         if(codigo != null){
-            session = FabricaConexoes.getInstance();
+            session = FabricaMySQLDAO.getSession();
             Query q = session.createQuery("select a from Alarme a where a.codigoAlarme = ?");
             q.setString(0, codigo.getCodigoAlarme());
             List l = q.list();
@@ -34,7 +28,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
     public boolean atualizar(Alarme alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaConexoes.getInstance();
+            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -53,7 +47,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
     public boolean salvar(Alarme alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaConexoes.getInstance();
+            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -72,7 +66,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
     public boolean apagar(Alarme alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaConexoes.getInstance();
+            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
