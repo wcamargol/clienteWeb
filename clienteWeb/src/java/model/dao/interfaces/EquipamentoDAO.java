@@ -5,10 +5,16 @@
  */
 package model.dao.interfaces;
 
+import model.beans.Equipamento;
+
 /**
  *
  * @author lubuntu
  */
 public interface EquipamentoDAO {
+    public Equipamento recuperar(Equipamento codigoEquipamento);
+    public boolean atualizar(Equipamento equipamento);
+    public boolean salvar(Equipamento equipamento);
+    public boolean apagar(Equipamento equipamento);
     
 }

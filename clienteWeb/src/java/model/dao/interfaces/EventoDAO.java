@@ -5,10 +5,15 @@
  */
 package model.dao.interfaces;
 
+import model.beans.Evento;
+
 /**
  *
  * @author lubuntu
  */
-public interface MoradorDAO {
-    
+public interface EventoDAO {
+    public Evento recuperar(Evento evento);
+    public boolean atualizar(Evento evento);
+    public boolean salvar(Evento evento);
+    public boolean apagar(Evento evento);
 }
