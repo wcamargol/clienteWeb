@@ -1,7 +1,7 @@
 package model.beans;
 
 
-import controller.Hash;
+import model.Hash;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;

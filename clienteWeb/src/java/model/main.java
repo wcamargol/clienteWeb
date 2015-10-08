@@ -1,6 +1,5 @@
 package model;
 
-import controller.Hash;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;

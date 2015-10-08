@@ -1,6 +1,6 @@
 package controller.servlets;
 
-import controller.Hash;
+import model.Hash;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
