@@ -15,26 +15,38 @@
         <title>Login SSHouse</title>
     </head>
     <body onload="window.scrollTo(0, 1);">
+        <%   HttpSession sessao = request.getSession(true);
+            if (sessao.getAttribute("loginAgenda")!=null) {
+        %>
+            <jsp:forward page="home.jsp"></jsp:forward>
+        <%
+        }else{ %>
 	<div class="login">
-		<div class="login-screen">
-			<div class="app-title">
-                                <h1><span class="slogan">SS</span>&nbsp;House</h1>
-			</div>
-			<form class="login-form" method="post" action="ServletLogin?pagina=home.jsp">
-				<div class="control-group">
-				<input type="text" class="login-field" value="" placeholder="login" id="nomeLogin">
-				<label class="login-field-icon fui-user" for="nomeLogin"></label>
-				</div>
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1><span class="slogan">SS</span>&nbsp;House</h1>
+                </div>
+                <div class="erro">
+                <% if (request.getAttribute("erro")!=null) {%>      
+                <h2><%= request.getAttribute("erro") %></h2>
+                <%}%>
+                </div>
+                <form class="login-form" method="post" action="ControleAcessoServlet">
+                    <div class="control-group">
+                    <input type="text" class="login-field" name="login" value="" placeholder="login" id="nomeLogin">
+                    <label class="login-field-icon fui-user" for="nomeLogin"></label>
+                    </div>
 
-				<div class="control-group">
-				<input type="password" class="login-field" value="" placeholder="senha" id="senhaLogin">
-				<label class="login-field-icon fui-lock" for="senhaLogin"></label>
-				</div>
+                    <div class="control-group">
+                    <input type="password" class="login-field" name="senha" value="" placeholder="senha" id="senhaLogin">
+                    <label class="login-field-icon fui-lock" for="senhaLogin"></label>
+                    </div>
 
-				<input class="btn" type="submit" name="btLogin" value="Entrar">                                
-				<a class="login-link" href="#"></a>
-			</form>
-		</div>
+                    <input class="btn" type="submit" name="btLogin" value="Entrar">                                
+                    <a class="login-link" href="#"></a>
+                </form>
+            </div>
 	</div>
+       <%} %>
 </body>
 </html>

@@ -14,6 +14,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 
 --%>
 
+<%@page import="model.beans.MoradorBean"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%
 String comando,operacao, estado;
@@ -31,6 +32,11 @@ String comando,operacao, estado;
         <header id="heading">
             <h1><span class="slogan">SAFE&nbsp;and&nbsp;SMART</span>&nbsp;House</h1>
         </header>
+        <%
+            HttpSession sessao = request.getSession(true);
+            MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
+        %>
+        bem vindo <%= moradorBean.getNome()%>
         <nav>
         <ul class="hnavbar">
             <li><a href="#">Sala</a>

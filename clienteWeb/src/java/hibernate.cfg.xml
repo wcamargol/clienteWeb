@@ -7,12 +7,13 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/SSHouse</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    <mapping class="model.beans.Alarme"/>
-    <mapping class="model.beans.Equipamento"/>
-    <mapping class="model.beans.Evento"/>
-    <mapping class="model.beans.EventoId"/>
-    <mapping class="model.beans.Morador"/>
-    <mapping class="model.beans.Operacao"/>
-    <mapping class="model.beans.OperacaoId"/>
+    <property name="hibernate.show_sql">true</property>
+    <mapping class="model.beans.AlarmeBean"/>
+    <mapping class="model.beans.EquipamentoBean"/>
+    <mapping class="model.beans.EventoBean"/>
+    <mapping class="model.beans.EventoIdBean"/>
+    <mapping class="model.beans.MoradorBean"/>
+    <mapping class="model.beans.OperacaoBean"/>
+    <mapping class="model.beans.OperacaoIdBean"/>
   </session-factory>
 </hibernate-configuration>

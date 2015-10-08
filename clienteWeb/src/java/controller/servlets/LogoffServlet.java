@@ -1,8 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller.servlets;
 
-import controller.Hash;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,15 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.MoradorBean;
-import model.dao.FabricaMySQLDAO;
-import model.dao.interfaces.MoradorDAO;
 
 /**
  *
  * @author lubuntu
  */
-@WebServlet(name = "ControleAcessoServlet", urlPatterns = {"/ControleAcessoServlet"})
-public class ControleAcessoServlet extends HttpServlet {
+@WebServlet(name = "LogoffServlet", urlPatterns = {"/LogoffServlet"})
+public class LogoffServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,28 +30,13 @@ public class ControleAcessoServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.security.NoSuchAlgorithmException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException, NoSuchAlgorithmException {
+        throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession sessao = request.getSession(true);
-        sessao.setMaxInactiveInterval(120);
-        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
-        
-        if(moradorBean == null){
-            String login = request.getParameter("login");
-            String senha = request.getParameter("senha");
-            if(login != null && !login.equals("") && senha != null && !senha.equals("")){
-                MoradorDAO moradorDAO = FabricaMySQLDAO.getMoradorDAO();
-                moradorBean = moradorDAO.recuperar(login);
-                if (moradorBean.getSenha().equals(new Hash().getMD5(senha))){
-                    sessao.setAttribute("loginSSHouse",moradorBean);                
-                }
-            }
-        }
-        
+        sessao.removeAttribute("loginSSHouse"); 
+        response.sendRedirect("homeLogin.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,11 +51,7 @@ public class ControleAcessoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,11 +65,7 @@ public class ControleAcessoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
+        processRequest(request, response);
     }
 
     /**

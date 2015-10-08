@@ -11,12 +11,12 @@ import org.hibernate.Transaction;
 public class AlarmeMySQLDAO implements AlarmeDAO {
     private Session session;
     
-    public AlarmeBean recuperar(AlarmeBean codigo){
+    public AlarmeBean recuperar(String codigo){
         AlarmeBean alarme = null;
         if(codigo != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Alarme a where a.codigoAlarme = ?");
-            q.setString(0, codigo.getCodigoAlarme());
+            Query q = session.createQuery("select a from Alarme a where "
+                + "a.codigoAlarme = '"+codigo+"'");
             List l = q.list();
             if (!l.isEmpty()){
                alarme = (AlarmeBean)l.get(0);

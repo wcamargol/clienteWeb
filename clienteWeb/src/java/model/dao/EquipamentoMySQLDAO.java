@@ -11,12 +11,12 @@ import org.hibernate.Transaction;
 public class EquipamentoMySQLDAO implements EquipamentoDAO {
      private Session session;
     
-    public EquipamentoBean recuperar(EquipamentoBean codigoEquipamento){
+    public EquipamentoBean recuperar(String codigoEquipamento){
         EquipamentoBean equipamento = null;
         if(codigoEquipamento != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Equipamento a where a.codigoEquipamento = ?");
-            q.setString(0, codigoEquipamento.getCodigoEquipamento());
+            Query q = session.createQuery("select a from Equipamento a where "
+                + "a.codigoEquipamento = '" + codigoEquipamento + "'");
             List l = q.list();
             if (!l.isEmpty()){
                equipamento = (EquipamentoBean)l.get(0);

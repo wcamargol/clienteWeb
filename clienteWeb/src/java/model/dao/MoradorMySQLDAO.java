@@ -14,7 +14,7 @@ public class MoradorMySQLDAO implements MoradorDAO {
     public MoradorBean recuperar(String login){
         MoradorBean morador = null;
         session = FabricaMySQLDAO.getSession();
-        Query q = session.createQuery("select a from Morador a where a.login = "+login);
+        Query q = session.createQuery("select m from MoradorBean m where m.login = '"+login+"'");
         List l = q.list();
         if (!l.isEmpty()){
            morador = (MoradorBean)l.get(0);
