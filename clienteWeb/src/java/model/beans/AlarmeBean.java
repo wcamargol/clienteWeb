@@ -11,7 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Alarme  implements Serializable {
+public class AlarmeBean  implements Serializable {
     
     @Id
     @Column(name = "codigoAlarme")
@@ -21,7 +21,7 @@ public class Alarme  implements Serializable {
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoAlarme"),
         inverseJoinColumns=@JoinColumn(name="codigoEquipamento"))
-    private Collection<Equipamento> equipamento;
+    private Collection<EquipamentoBean> equipamento;
 
     public String getCodigoAlarme() {
         return codigoAlarme;
@@ -39,11 +39,11 @@ public class Alarme  implements Serializable {
         this.descricaoAlarme = descricaoAlarme;
     }
 
-    public Collection<Equipamento> getEquipamento() {
+    public Collection<EquipamentoBean> getEquipamento() {
         return equipamento;
     }
 
-    public void setEquipamento(Collection<Equipamento> equipamento) {
+    public void setEquipamento(Collection<EquipamentoBean> equipamento) {
         this.equipamento = equipamento;
     }    
 }

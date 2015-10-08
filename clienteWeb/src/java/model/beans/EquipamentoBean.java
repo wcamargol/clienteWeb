@@ -11,7 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Equipamento  implements Serializable {
+public class EquipamentoBean  implements Serializable {
     
     @Id
     private String codigoEquipamento;
@@ -20,12 +20,12 @@ public class Equipamento  implements Serializable {
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="codigoAlarme"))
-    private Collection<Alarme> alarme;
+    private Collection<AlarmeBean> alarme;
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Operacao", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="login"))
-    private Collection<Morador> morador;
+    private Collection<MoradorBean> morador;
 
     public String getCodigoEquipamento() {
         return codigoEquipamento;
@@ -43,19 +43,19 @@ public class Equipamento  implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<Alarme> getAlarme() {
+    public Collection<AlarmeBean> getAlarme() {
         return alarme;
     }
 
-    public void setAlarme(Collection<Alarme> alarme) {
+    public void setAlarme(Collection<AlarmeBean> alarme) {
         this.alarme = alarme;
     }
 
-    public Collection<Morador> getMorador() {
+    public Collection<MoradorBean> getMorador() {
         return morador;
     }
 
-    public void setMorador(Collection<Morador> morador) {
+    public void setMorador(Collection<MoradorBean> morador) {
         this.morador = morador;
     }
     

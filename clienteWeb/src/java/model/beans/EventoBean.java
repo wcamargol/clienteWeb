@@ -8,20 +8,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Evento  implements Serializable {
+public class EventoBean  implements Serializable {
 
     @EmbeddedId
-    private EventoId id;
+    private EventoIdBean id;
     @Temporal(TemporalType.DATE)
     private Date diaEvento;
     @Temporal(TemporalType.TIME)
     private Date horaEvento;
 
-    public EventoId getId() {
+    public EventoIdBean getId() {
         return id;
     }
 
-    public void setId(EventoId id) {
+    public void setId(EventoIdBean id) {
         this.id = id;
     }
 

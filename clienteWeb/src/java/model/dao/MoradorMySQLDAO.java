@@ -1,7 +1,7 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Morador;
+import model.beans.MoradorBean;
 import model.dao.interfaces.MoradorDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -11,21 +11,18 @@ import org.hibernate.Transaction;
 public class MoradorMySQLDAO implements MoradorDAO {
     private Session session;
     
-    public Morador recuperar(Morador login){
-        Morador morador = null;
-        if(morador != null){
-            session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Morador a where a.login = ?");
-            q.setString(0, login.getLogin());
-            List l = q.list();
-            if (!l.isEmpty()){
-               morador = (Morador)l.get(0);
-            }
-        }
+    public MoradorBean recuperar(String login){
+        MoradorBean morador = null;
+        session = FabricaMySQLDAO.getSession();
+        Query q = session.createQuery("select a from Morador a where a.login = "+login);
+        List l = q.list();
+        if (!l.isEmpty()){
+           morador = (MoradorBean)l.get(0);
+        }        
         return morador;
     }
     
-    public boolean atualizar(Morador morador){
+    public boolean atualizar(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
             session = FabricaMySQLDAO.getSession();
@@ -44,7 +41,7 @@ public class MoradorMySQLDAO implements MoradorDAO {
         }
         return sucesso;    
     }
-    public boolean salvar(Morador morador){
+    public boolean salvar(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
             session = FabricaMySQLDAO.getSession();
@@ -63,7 +60,7 @@ public class MoradorMySQLDAO implements MoradorDAO {
         }
         return sucesso;            
     }
-    public boolean apagar(Morador morador){
+    public boolean apagar(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
             session = FabricaMySQLDAO.getSession();

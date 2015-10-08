@@ -1,10 +1,10 @@
 package model.dao.interfaces;
 
-import model.beans.Alarme;
+import model.beans.AlarmeBean;
 
 public interface AlarmeDAO {
-    public Alarme recuperar(Alarme codigoAlarme);
-    public boolean atualizar(Alarme alarme);
-    public boolean salvar(Alarme alarme);
-    public boolean apagar(Alarme alarme);
+    public AlarmeBean recuperar(AlarmeBean codigoAlarme);
+    public boolean atualizar(AlarmeBean alarme);
+    public boolean salvar(AlarmeBean alarme);
+    public boolean apagar(AlarmeBean alarme);
 }

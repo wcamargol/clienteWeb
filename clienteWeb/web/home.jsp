@@ -7,7 +7,7 @@
 
 ********************************************************************************
 
-Código adaptado do original disponível em http://www.freeliquidtemplates.com/ e adaptado 
+Código adaptado do original disponível em http://www.freeliquidtemplates.com/001.zip/ e adaptado 
 para jsp.
 
 Esta página permitira o acesso ao sistema de automação Safe and Smart House
@@ -25,8 +25,7 @@ String comando,operacao, estado;
         <title>SSHouse</title>
         <meta charset="ISO-8859-1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <link href="css/estilos.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/rotacaoMonitor.js"></script>
+        <link href="css/estilosHome.css" rel="stylesheet" type="text/css" />
     </head>
     <body onload="window.scrollTo(0, 1);">
         <header id="heading">
@@ -36,20 +35,7 @@ String comando,operacao, estado;
         <ul class="hnavbar">
             <li><a href="#">Sala</a>
                 <ul>
-                    <%
-                    if (request.getAttribute("eqto").equals("SL01")){                        
-                        if (request.getAttribute("estado").equals("Desligado")
-                            ||
-                            (request.getAttribute("estado") == null)) {
-                            comando = "SL01L2";
-                            operacao = "Ligar";
-                        }else{
-                            comando = "SL01D2";
-                            operacao = "Desligar";
-                        }
-                    }
-                    %> 
-                    <li><a href="ClienteWebServlet?comando=<%=comando%>"><%=operacao%> Ilumina&ccedil;&atilde;o</a></li>                     
+                    <li><a href="ClienteWebServlet?comando=">Ilumina&ccedil;&atilde;o</a></li>                     
                     <li><a href="#heading">Restructure</a></li>
                     <li><a href="#heading">Drop down</a></li>
                 </ul>

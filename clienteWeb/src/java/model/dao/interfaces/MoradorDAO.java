@@ -1,10 +1,10 @@
 package model.dao.interfaces;
 
-import model.beans.Morador;
+import model.beans.MoradorBean;
 
 public interface MoradorDAO {
-    public Morador recuperar(Morador morador);
-    public boolean atualizar(Morador morador);
-    public boolean salvar(Morador morador);
-    public boolean apagar(Morador morador);    
+    public MoradorBean recuperar(String login);
+    public boolean atualizar(MoradorBean morador);
+    public boolean salvar(MoradorBean morador);
+    public boolean apagar(MoradorBean morador);    
 }

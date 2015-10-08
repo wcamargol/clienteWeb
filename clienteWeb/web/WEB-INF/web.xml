@@ -23,6 +23,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>ClienteWebServlet</welcome-file>
+        <welcome-file>homeLogin.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

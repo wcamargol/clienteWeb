@@ -1,8 +1,8 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Evento;
-import model.beans.EventoId;
+import model.beans.EventoBean;
+import model.beans.EventoIdBean;
 import model.dao.interfaces.EventoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -13,8 +13,8 @@ public class EventoMySQLDAO implements EventoDAO {
     
     private Session session;
     
-    public Evento recuperar(EventoId id) {
-        Evento evento = null;
+    public EventoBean recuperar(EventoIdBean id) {
+        EventoBean evento = null;
         if(id != null){
             session = FabricaMySQLDAO.getSession();
             Query q = session.createQuery("select a from Evento a where a.id.alarme.codigoAlarme = ? "
@@ -23,13 +23,13 @@ public class EventoMySQLDAO implements EventoDAO {
             q.setString(1, id.getEquipamento().getCodigoEquipamento());
             List l = q.list();
             if (!l.isEmpty()){
-               evento = (Evento)l.get(0);
+               evento = (EventoBean)l.get(0);
             }
         }
         return evento;
     }
     
-    public boolean atualizar(Evento evento) {
+    public boolean atualizar(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -50,7 +50,7 @@ public class EventoMySQLDAO implements EventoDAO {
     }
 
     
-    public boolean salvar(Evento evento) {
+    public boolean salvar(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -70,7 +70,7 @@ public class EventoMySQLDAO implements EventoDAO {
         return sucesso;   
     }
     
-    public boolean apagar(Evento evento) {
+    public boolean apagar(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();

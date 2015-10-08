@@ -6,29 +6,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class EventoId  implements java.io.Serializable {
+public class EventoIdBean  implements java.io.Serializable {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codigoEquipamento")
-    private Equipamento equipamento;
+    private EquipamentoBean equipamento;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "codigoAlarme")
-    private Alarme alarme;
+    private AlarmeBean alarme;
     
-    public Equipamento getEquipamento() {
+    public EquipamentoBean getEquipamento() {
         return equipamento;
     }
 
-    public void setEquipamento(Equipamento equipamento) {
+    public void setEquipamento(EquipamentoBean equipamento) {
         this.equipamento = equipamento;
     }
 
-    public Alarme getAlarme() {
+    public AlarmeBean getAlarme() {
         return alarme;
     }
 
-    public void setAlarme(Alarme alarme) {
+    public void setAlarme(AlarmeBean alarme) {
         this.alarme = alarme;
     }
 }

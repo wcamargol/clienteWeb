@@ -1,8 +1,8 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Operacao;
-import model.beans.OperacaoId;
+import model.beans.OperacaoBean;
+import model.beans.OperacaoIdBean;
 import model.dao.interfaces.OperacaoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -12,8 +12,8 @@ import org.hibernate.Transaction;
 public class OperacaoMySQLDAO implements OperacaoDAO {
     private Session session;
     
-    public Operacao recuperar(OperacaoId id) {
-        Operacao evento = null;
+    public OperacaoBean recuperar(OperacaoIdBean id) {
+        OperacaoBean evento = null;
         if(id != null){
             session = FabricaMySQLDAO.getSession();
             Query q = session.createQuery("select a from Operacao a where a.id.morador.login = ? "
@@ -22,13 +22,13 @@ public class OperacaoMySQLDAO implements OperacaoDAO {
             q.setString(1, id.getEquipamento().getCodigoEquipamento());
             List l = q.list();
             if (!l.isEmpty()){
-               evento = (Operacao)l.get(0);
+               evento = (OperacaoBean)l.get(0);
             }
         }
         return evento;
     }
     
-    public boolean atualizar(Operacao evento) {
+    public boolean atualizar(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -49,7 +49,7 @@ public class OperacaoMySQLDAO implements OperacaoDAO {
     }
 
     
-    public boolean salvar(Operacao evento) {
+    public boolean salvar(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();
@@ -69,7 +69,7 @@ public class OperacaoMySQLDAO implements OperacaoDAO {
         return sucesso;   
     }
     
-    public boolean apagar(Operacao evento) {
+    public boolean apagar(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
             session = FabricaMySQLDAO.getSession();

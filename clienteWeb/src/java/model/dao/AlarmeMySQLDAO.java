@@ -1,7 +1,7 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.Alarme;
+import model.beans.AlarmeBean;
 import model.dao.interfaces.AlarmeDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -11,21 +11,21 @@ import org.hibernate.Transaction;
 public class AlarmeMySQLDAO implements AlarmeDAO {
     private Session session;
     
-    public Alarme recuperar(Alarme codigo){
-        Alarme alarme = null;
+    public AlarmeBean recuperar(AlarmeBean codigo){
+        AlarmeBean alarme = null;
         if(codigo != null){
             session = FabricaMySQLDAO.getSession();
             Query q = session.createQuery("select a from Alarme a where a.codigoAlarme = ?");
             q.setString(0, codigo.getCodigoAlarme());
             List l = q.list();
             if (!l.isEmpty()){
-               alarme = (Alarme)l.get(0);
+               alarme = (AlarmeBean)l.get(0);
             }
         }
         return alarme;
     }
     
-    public boolean atualizar(Alarme alarme){
+    public boolean atualizar(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();
@@ -44,7 +44,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
         }
         return sucesso;    
     }
-    public boolean salvar(Alarme alarme){
+    public boolean salvar(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();
@@ -63,7 +63,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
         }
         return sucesso;            
     }
-    public boolean apagar(Alarme alarme){
+    public boolean apagar(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();

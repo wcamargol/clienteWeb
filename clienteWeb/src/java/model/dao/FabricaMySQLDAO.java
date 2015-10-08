@@ -3,6 +3,8 @@ package model.dao;
 import model.dao.interfaces.AlarmeDAO;
 import model.dao.interfaces.EquipamentoDAO;
 import model.dao.interfaces.EventoDAO;
+import model.dao.interfaces.MoradorDAO;
+import model.dao.interfaces.OperacaoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,4 +41,11 @@ public class FabricaMySQLDAO {
         return new EventoMySQLDAO();
     }
     
+    public static MoradorDAO getMoradorDAO(){
+        return new MoradorMySQLDAO();
+    }
+    
+    public static OperacaoDAO getOperacaoDAO(){
+        return new OperacaoMySQLDAO();
+    }
 }

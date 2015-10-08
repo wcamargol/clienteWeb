@@ -1,10 +1,10 @@
 package model.dao.interfaces;
 
-import model.beans.Equipamento;
+import model.beans.EquipamentoBean;
 
 public interface EquipamentoDAO {
-    public Equipamento recuperar(Equipamento codigoEquipamento);
-    public boolean atualizar(Equipamento equipamento);
-    public boolean salvar(Equipamento equipamento);
-    public boolean apagar(Equipamento equipamento);    
+    public EquipamentoBean recuperar(EquipamentoBean codigoEquipamento);
+    public boolean atualizar(EquipamentoBean equipamento);
+    public boolean salvar(EquipamentoBean equipamento);
+    public boolean apagar(EquipamentoBean equipamento);    
 }

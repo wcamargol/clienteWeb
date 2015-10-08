@@ -1,11 +1,11 @@
 package model.dao.interfaces;
 
-import model.beans.Operacao;
-import model.beans.OperacaoId;
+import model.beans.OperacaoBean;
+import model.beans.OperacaoIdBean;
 
 public interface OperacaoDAO {
-    public Operacao recuperar(OperacaoId id);
-    public boolean atualizar(Operacao operacao);
-    public boolean salvar(Operacao operacao);
-    public boolean apagar(Operacao operacao);
+    public OperacaoBean recuperar(OperacaoIdBean id);
+    public boolean atualizar(OperacaoBean operacao);
+    public boolean salvar(OperacaoBean operacao);
+    public boolean apagar(OperacaoBean operacao);
 }

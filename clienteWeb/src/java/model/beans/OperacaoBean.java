@@ -7,20 +7,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Operacao  implements java.io.Serializable {
+public class OperacaoBean  implements java.io.Serializable {
     
     @EmbeddedId
-    private OperacaoId id;
+    private OperacaoIdBean id;
     @Temporal(TemporalType.DATE)
     private Date diaOperacao;
     @Temporal(TemporalType.TIME)
     private Date horaOpercao;
 
-    public OperacaoId getId() {
+    public OperacaoIdBean getId() {
         return id;
     }
 
-    public void setId(OperacaoId id) {
+    public void setId(OperacaoIdBean id) {
         this.id = id;
     }
 

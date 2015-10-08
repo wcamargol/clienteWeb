@@ -1,6 +1,9 @@
 package model.beans;
 
+
+import controller.Hash;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -12,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Morador  implements Serializable {
+public class MoradorBean  implements Serializable {
     
     @Id
     private String login;
@@ -24,7 +27,7 @@ public class Morador  implements Serializable {
     @JoinTable(name="Operacao", schema="SSHouse",
         joinColumns=@JoinColumn(name="login"),
         inverseJoinColumns=@JoinColumn(name="codigoEquipamento"))
-    private Collection<Equipamento> equipamento;
+    private Collection<EquipamentoBean> equipamento;
     
     public String getLogin() {
         return login;
@@ -54,15 +57,17 @@ public class Morador  implements Serializable {
         return senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSenha(String senha) throws NoSuchAlgorithmException {
+        this.senha = new Hash().getMD5(senha);
     }
 
-    public Collection<Equipamento> getEquipamento() {
+    public Collection<EquipamentoBean> getEquipamento() {
         return equipamento;
     }
 
-    public void setEquipamento(Collection<Equipamento> equipamento) {
+    public void setEquipamento(Collection<EquipamentoBean> equipamento) {
         this.equipamento = equipamento;
     }
+    
+    
 }
