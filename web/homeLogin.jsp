@@ -5,6 +5,7 @@
     Author     : Walter Luiz de Camargo
 --%>
 
+<%@page import="model.beans.MoradorBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,9 +17,9 @@
     </head>
     <body onload="window.scrollTo(0, 1);">
         <%   HttpSession sessao = request.getSession(true);
-            if (sessao.getAttribute("loginAgenda")!=null) {
+            if (sessao.getAttribute("loginSSHouse")!=null) {
         %>
-            <jsp:forward page="home.jsp"></jsp:forward>
+            <jsp:forward page="LoginServlet"></jsp:forward>
         <%
         }else{ %>
 	<div class="login">
@@ -31,7 +32,7 @@
                 <h2><%= request.getAttribute("erro") %></h2>
                 <%}%>
                 </div>
-                <form class="login-form" method="post" action="ControleAcessoServlet">
+                <form class="login-form" method="post" action="LoginServlet">
                     <div class="control-group">
                     <input type="text" class="login-field" name="login" value="" placeholder="login" id="nomeLogin">
                     <label class="login-field-icon fui-user" for="nomeLogin"></label>

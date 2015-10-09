@@ -32,16 +32,11 @@ String comando,operacao, estado;
         <header id="heading">
             <h1><span class="slogan">SAFE&nbsp;and&nbsp;SMART</span>&nbsp;House</h1>
         </header>
-        <%
-            HttpSession sessao = request.getSession(true);
-            MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
-        %>
-        bem vindo <%= moradorBean.getNome()%>
         <nav>
         <ul class="hnavbar">
             <li><a href="#">Sala</a>
                 <ul>
-                    <li><a href="ClienteWebServlet?comando=">Ilumina&ccedil;&atilde;o</a></li>                     
+                    <li><a href="ClienteWebServlet?comando=SL01L2">Ilumina&ccedil;&atilde;o</a></li>                     
                     <li><a href="#heading">Restructure</a></li>
                     <li><a href="#heading">Drop down</a></li>
                 </ul>

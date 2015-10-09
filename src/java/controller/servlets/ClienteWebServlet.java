@@ -44,6 +44,7 @@ public class ClienteWebServlet extends HttpServlet {
         if (comando != null){            
             Cliente cliente = new Cliente();                
             retorno = cliente.enviaComando(comando);
+            System.out.println(retorno);
             request.setAttribute("eqto", comando.subSequence(0, 4));
             request.setAttribute("estado", retorno.substring(7));
         }

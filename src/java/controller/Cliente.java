@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Cliente{
+public class Cliente implements Runnable{
 
     private Socket connSocket;
 
@@ -21,21 +21,27 @@ public class Cliente{
     public String enviaComando(String str){
         Scanner entrada = null;
         PrintStream saida = null;
-        String feedback = null;
+        String respostaServidor = null;
         try {
             entrada = new Scanner(this.connSocket.getInputStream());
             saida = new PrintStream(this.connSocket.getOutputStream());
             saida.println(str);
             saida.flush();
             while (entrada.hasNextLine()) {
-                feedback = entrada.nextLine();
+                respostaServidor = entrada.nextLine();
             } //fim do while
             entrada.close();
             saida.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println(feedback);
-        return feedback;
+        return respostaServidor;
     } //fim do metodo esperaMsg
+
+    @Override
+    public void run() {
+        while(true){
+            System.out.println(enviaComando("?"));            
+        }
+    }
 }
