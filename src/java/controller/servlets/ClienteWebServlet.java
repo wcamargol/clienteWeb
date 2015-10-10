@@ -43,13 +43,7 @@ public class ClienteWebServlet extends HttpServlet {
         
         if (comando != null){            
             Cliente cliente = new Cliente();
-            retorno = cliente.enviaComando(comando.substring(4));
-            request.setAttribute("eqto", comando.subSequence(0, 4));
-            if (retorno.equals("L") || retorno.equals("D")){
-                request.setAttribute("estado",retorno);
-            }else {
-                request.setAttribute("estado",comando.substring(4));                
-                }          
+            retorno = cliente.enviaComando(comando);
         }
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request,response);

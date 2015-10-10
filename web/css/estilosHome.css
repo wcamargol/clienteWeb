@@ -7,23 +7,18 @@
     margin: 0 0 0 0;
     padding: 0 0 0 0
 }
-
 body {
     max-width: 1600px;
-    min-height: 480px;
     margin: 0 auto;
-    font-family: Trebuchet MS, Lucida Grande, freesans , Arial, verdana, tahoma , sans-serif;
+    font-family: Trebuchet MS, Lucida Grande, freesans , Arial, verdana, tahoma , serif;
     font-size: 20px;
     font-style: normal;
     font-weight: normal;
     color: #333333;
-    background:#2e2e2e;
-    background: #ffffff;
+    background: #ffffff
 }
-
 h1 , h2 {
-    padding: .5% 5%;
-    font-weight: lighter;
+    font-weight: lighter
 }
 
 header {
@@ -34,14 +29,17 @@ header {
 }
 
 header h1 {
-    font-size: 24px;
+    font-size: 30px;
+    float: left;
     color: #fefefe;
+    text-shadow: none
 }
 
 .slogan {
-    font-size: 30px;
+    font-size: 24px;
     font-style: oblique;
     color: goldenrod;
+    text-shadow: none;
 }
 
 nav {
@@ -54,9 +52,16 @@ nav {
 
 .hnavbar{
     list-style:none;
+    margin-bottom: 0;
+    float:left;
+    position:relative;
+    z-index:5;
 }
 
 .hnavbar li{
+    float:left;
+    margin-right:10px;
+    margin-bottom: 0px;
     position:relative;
 }
 
@@ -68,6 +73,11 @@ nav {
     text-decoration:none;
 }
 
+.hnavbar a:hover{
+    text-decoration:none;
+    border: solid #0e0e0e 1px;
+}
+
 .hnavbar ul{
     list-style:none;
     position:absolute;
@@ -75,27 +85,98 @@ nav {
 }
 
 .hnavbar ul li{
-    width: 150%;    
+    padding-top: 0px;
+    float:none;
+    width: 150%
 }
 
-.hnavbar li:hover ul{left:0;}
+.hnavbar ul a{
+    white-space:nowrap;
+}
+
+.hnavbar li:hover ul{
+    left:0;
+}
 
 .hnavbar li:hover a{ 
-    background:#2e3e2e;
+    background:#2e2e2e;
     text-decoration:none;
 }
 
-.hnavbar li:hover ul li a:hover{background:#696969;}
+.hnavbar li:hover ul a{ 
+    text-decoration:none;
+}
+.hnavbar li:hover ul li a:hover{
+    background:#696969;
+}
+.main {
+    width: 80%;
+    padding: 0 10%;
+    float: left;
+}
 
-/* 
- * Ajustes conforme o tamanho da tela
- */
+footer {
+    width: 100%;
+    background: #2e2e2e;
+    float: left
+}
+
+
+.main h1 {
+    font-size : 24px;
+    text-align : center;
+    color : #000001;
+    margin: 1% 0 
+}
+
+.main h2 {
+    font-size : 22px;
+    text-align : center;
+    color : #696969;
+    margin: 1% 0
+}
+
+.main p {
+    text-align : left;
+    text-indent : 16px ;
+    margin: 1% 0
+}
+
+.main p.clear {
+    clear:both
+}
+
+footer p {
+    text-align : center;
+    color: #fefefe;
+    padding: 2% 0
+} 
+
+footer p a , footer p a:visited {
+    color: #c0c0c0
+}
+
+/* Media Queries for web page adjustments */
+@media all and (max-width:1440px) {
+    .image1 {display: none} /* Hide image1 */
+    .image2 {display: block;float: right} /* Show image2 and float it*/
+}
+
+@media all and (max-width:1280px){
+    body {font-size:18px}
+    .image2 {display: none} /* Hide image2 */
+    .image3 {display: block;float: right} /* Show image3 and float it */
+}
 
 @media all and (max-width:1024px) {
     .main h1 {font-size:24px}
     .main h2 , .right h2 {font-size:20px}
 }
 
+@media all and (max-width:850px) {
+    .image3 {display: none}
+    .image4 {display:block;float: right}
+}
 @media all and (max-width:768px) {
     body {font-size: 16px;}
     header h1 {font-size: 22px}
@@ -107,27 +188,51 @@ nav {
 @media all and (max-width:720px) {
     .main h1 {font-size:20px}
 }
-
 @media all and (max-width: 480px) {
-    .main {display: none}
-    header ,  nav , .hnavbar , .hnavbar li ul{
+    header ,  nav , .main , .hnavbar , .hnavbar li ul ,  
+    footer  {
         width: 90% !important;
         display: block !important;
         padding:0 5% !important;
         margin: 0 auto !important;
     }
+    
     header h1 {
         float: none;
         font-size:18px;
         text-align: center
     }
-    .slogan {font-size:18px;}
-    .main h1 , .main h2 , .right h2 {font-size: 18px}
+    
+    .slogan {
+        font-size:18px;
+    }
+    
+    .main h1 , .main h2 , .right h2 {
+        font-size: 18px
+    }
+    
     .hnavbar li , .hnavbar li ul li {
         width: 100%;
         text-align: center;
         margin: 0 0;
     }
-    .hnavbar li a {padding: 5% 0;}
-    .hnavbar li ul {z-index: 10}
+    
+    .hnavbar li a {
+        padding: 5% 0;
+    }
+    .hnavbar li ul {
+        z-index: 10
+    }
+    
+    .image4{
+        display: none;
+    }
+    
+    .image3 { 
+        float: none;
+        display: block;
+        max-width: 96%;
+        margin: 2% auto;
+        clear: both
+    }
 }
