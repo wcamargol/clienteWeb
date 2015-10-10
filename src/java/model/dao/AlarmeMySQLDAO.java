@@ -10,15 +10,21 @@ import org.hibernate.Transaction;
 public class AlarmeMySQLDAO{
     private Session session;
     
-    public AlarmeBean getAlarmeBean(String codigo){
+    public AlarmeBean getAlarmeBean(String codigo){        
         AlarmeBean alarme = null;
-        if(codigo != null){
+        if (codigo != null){
             session = FabricaMySQLDAO.getSession();
-            Query consulta = session.createQuery("select a from Alarme a where "
+            try{
+            Query consulta = session.createQuery("select a from AlarmeBean a where "
                 + "a.codigoAlarme = '"+codigo+"'");
             List l = consulta.list();
             if (!l.isEmpty()){
                alarme = (AlarmeBean)l.get(0);
+            }
+            }catch (HibernateException ex){
+                ex.printStackTrace();
+            }finally{
+                session.close();
             }
         }
         return alarme;
@@ -26,9 +32,16 @@ public class AlarmeMySQLDAO{
     
     public List listAlarmeBean(){
         session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Alarme ");
-        List listaAlarmeBean = consulta.list();
-        return listaAlarmeBean;
+        Query consulta = null;
+        try{            
+            consulta = session.createQuery("from AlarmeBean ");
+        }catch (HibernateException ex){
+                ex.printStackTrace();
+            
+        }finally{
+            session.close();
+        }        
+        return consulta.list();
     }
     
     public boolean updateAlarmeBean(AlarmeBean alarme){

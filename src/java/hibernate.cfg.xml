@@ -9,6 +9,7 @@
     <property name="hibernate.connection.password">root</property>
     <property name="hibernate.show_sql">true</property>
     <mapping class="model.beans.AlarmeBean"/>
+    <mapping class="model.beans.AmbienteBean"/>
     <mapping class="model.beans.EquipamentoBean"/>
     <mapping class="model.beans.EventoBean"/>
     <mapping class="model.beans.EventoIdBean"/>

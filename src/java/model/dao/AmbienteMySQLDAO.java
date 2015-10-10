@@ -18,12 +18,18 @@ public class AmbienteMySQLDAO {
     public AmbienteBean getAmbienteBean(String codigo){
         AmbienteBean ambiente = null;
         if(codigo != null){
-            session = FabricaMySQLDAO.getSession();
-            Query consulta = session.createQuery("select a from Ambiente a where "
-                + "a.codigoAmbiente = '"+codigo+"'");
-            List l = consulta.list();
-            if (!l.isEmpty()){
-               ambiente = (AmbienteBean)l.get(0);
+            try{
+                session = FabricaMySQLDAO.getSession();
+                Query consulta = session.createQuery("select a from AmbienteBean a where "
+                    + "a.codigoAmbiente = '"+codigo+"'");
+                List l = consulta.list();
+                if (!l.isEmpty()){
+                   ambiente = (AmbienteBean)l.get(0);
+                }
+            }catch (HibernateException ex){
+                ex.printStackTrace();
+            }finally{
+                session.close();
             }
         }
         return ambiente;
@@ -31,9 +37,16 @@ public class AmbienteMySQLDAO {
     
     public List listAmbienteBean(){
         session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Ambiente ");
-        List listaAmbienteBean = consulta.list();
-        return listaAmbienteBean;
+        Query consulta = null;
+        try{
+            consulta = session.createQuery("from AmbienteBean");           
+        }catch (HibernateException ex){
+                ex.printStackTrace();
+            
+        }finally{
+            session.close();
+        }
+        return consulta.list();
     }
     
     public boolean updateAmbienteBean(AmbienteBean ambiente){

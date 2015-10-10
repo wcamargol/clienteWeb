@@ -8,13 +8,16 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class EquipamentoMySQLDAO{
-     private Session session;
+    private Session session;
+    
+    EquipamentoMySQLDAO (){
+        session = FabricaMySQLDAO.getSession();
+    }
     
     public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
         EquipamentoBean equipamento = null;
-        if(codigoEquipamento != null){
-            session = FabricaMySQLDAO.getSession();
-            Query consulta = session.createQuery("select a from Equipamento a where "
+        if(codigoEquipamento != null){            
+            Query consulta = session.createQuery("select a from EquipamentoBean a where "
                 + "a.codigoEquipamento = '" + codigoEquipamento + "'");
             List l = consulta.list();
             if (!l.isEmpty()){
@@ -25,16 +28,13 @@ public class EquipamentoMySQLDAO{
     }
     
     public List listEquipamentoBean(){
-        session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Equipamento ");
-        List listaEquipamentoBean = consulta.list();
-        return listaEquipamentoBean;
+        Query consulta = session.createQuery("from EquipamentoBean");
+        return consulta.list();
     }
     
     public boolean updateEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
-            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -53,7 +53,6 @@ public class EquipamentoMySQLDAO{
     public boolean saveEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
-            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -72,7 +71,6 @@ public class EquipamentoMySQLDAO{
     public boolean deleteEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
-            session = FabricaMySQLDAO.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();

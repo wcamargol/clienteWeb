@@ -15,14 +15,22 @@ public class EventoMySQLDAO{
     public EventoBean getEventoBean(EventoIdBean id) {
         EventoBean evento = null;
         if(id != null){
-            session = FabricaMySQLDAO.getSession();
-            Query consulta = session.createQuery("select a from Evento a where a.id.alarme.codigoAlarme = ? "
-                + "and a.id.equipamento.codigoEquipamento = ? ");
-            consulta.setString(0, id.getAlarme().getCodigoAlarme());
-            consulta.setString(1, id.getEquipamento().getCodigoEquipamento());
-            List l = consulta.list();
-            if (!l.isEmpty()){
-               evento = (EventoBean)l.get(0);
+            try{
+                session = FabricaMySQLDAO.getSession();
+                Query consulta = session.createQuery("select a from EventoBean a "
+                    + "where a.id.alarme.codigoAlarme = ? "
+                    + "and a.id.equipamento.codigoEquipamento = ? ");
+                consulta.setString(0, id.getAlarme().getCodigoAlarme());
+                consulta.setString(1, id.getEquipamento().getCodigoEquipamento());
+                List l = consulta.list();
+                if (!l.isEmpty()){
+                   evento = (EventoBean)l.get(0);
+                }
+            }catch (HibernateException ex){
+                ex.printStackTrace();
+
+            }finally{
+                session.close();
             }
         }
         return evento;
@@ -30,9 +38,15 @@ public class EventoMySQLDAO{
     
     public List listEventoBean(){
         session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Alarme ");
-        List listaEventoBean = consulta.list();
-        return listaEventoBean;
+        Query consulta = null;
+        try{
+            consulta = session.createQuery("from EventoBean");
+        }catch (HibernateException ex){
+            ex.printStackTrace();            
+        }finally{
+            session.close();
+        }
+        return consulta.list();
     }
     
     public boolean updateEventoBean(EventoBean evento) {

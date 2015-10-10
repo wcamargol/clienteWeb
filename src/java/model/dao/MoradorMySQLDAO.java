@@ -12,20 +12,36 @@ public class MoradorMySQLDAO{
     
     public MoradorBean getMoradorBean(String login){
         MoradorBean morador = null;
-        session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("select m from MoradorBean m where m.login = '"+login+"'");
-        List l = consulta.list();
-        if (!l.isEmpty()){
-           morador = (MoradorBean)l.get(0);
-        }        
+        if (login != null){
+            try{
+                session = FabricaMySQLDAO.getSession();
+                Query consulta = session.createQuery("select m from MoradorBean "
+                    + "m where m.login = '"+login+"'");
+                List l = consulta.list();
+                if (!l.isEmpty()){
+                   morador = (MoradorBean)l.get(0);
+                }
+            }catch (HibernateException ex){
+                ex.printStackTrace();
+            }finally{
+                session.close();
+            }
+        }
         return morador;
     }
     
     public List listMoradorBean(){
         session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Alarme ");
-        List listaMoradorBean = consulta.list();
-        return listaMoradorBean;
+        Query consulta = null;
+        try{            
+            consulta = session.createQuery("from MoradorBean");
+        }catch (HibernateException ex){
+                ex.printStackTrace();
+            
+        }finally{
+            session.close();
+        }
+        return consulta.list();
     }
     
     public boolean updateMoradorBean(MoradorBean morador){

@@ -36,9 +36,9 @@ public class LoginServlet extends HttpServlet {
         HttpSession sessao = request.getSession(true);
         sessao.setMaxInactiveInterval(120);
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
-         /*EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
+        EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
         List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
-        sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);*/
+        sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);
         
         if(moradorBean == null){
             String login = request.getParameter("login");

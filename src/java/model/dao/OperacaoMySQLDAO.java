@@ -14,20 +14,35 @@ public class OperacaoMySQLDAO{
     public OperacaoBean getOperacaoBean(OperacaoIdBean id) {
         OperacaoBean evento = null;
         if(id != null){
-            session = FabricaMySQLDAO.getSession();
-            Query consulta = session.createQuery("select a from Operacao a where a.id.morador.login = ? "
-                + "and a.id.equipamento.codigoEquipamento = ? ");
-             consulta.setString(0, id.getMorador().getLogin());
-            consulta.setString(1, id.getEquipamento().getCodigoEquipamento());
-            List l = consulta.list();
-            if (!l.isEmpty()){
-               evento = (OperacaoBean)l.get(0);
+            try{
+                session = FabricaMySQLDAO.getSession();
+                Query consulta = session.createQuery("select a from OperacaoBean a "
+                    + "where a.id.morador.login = ? "
+                    + "and a.id.equipamento.codigoEquipamento = ? ");
+                 consulta.setString(0, id.getMorador().getLogin());
+                consulta.setString(1, id.getEquipamento().getCodigoEquipamento());
+                List l = consulta.list();
+                if (!l.isEmpty()){
+                   evento = (OperacaoBean)l.get(0);
+                }            
+            }catch (HibernateException ex){
+                ex.printStackTrace();            
+            }finally{
+                session.close();
             }
         }
         return evento;
     }
     
     public List listaOperacaoBean(){
+        try{
+            
+        }catch (HibernateException ex){
+                ex.printStackTrace();
+            
+        }finally{
+            session.close();
+        }
         session = FabricaMySQLDAO.getSession();
         Query consulta = session.createQuery("from Alarme ");
         List listaOperacaoBean = consulta.list();
@@ -53,7 +68,6 @@ public class OperacaoMySQLDAO{
         }
         return sucesso;            
     }
-
     
     public boolean saveOperacaoBean(OperacaoBean evento) {
         boolean sucesso = false;
