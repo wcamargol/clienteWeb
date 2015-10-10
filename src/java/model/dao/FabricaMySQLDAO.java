@@ -27,6 +27,10 @@ public class FabricaMySQLDAO {
         return new AlarmeMySQLDAO();
     }
     
+    public static AmbienteMySQLDAO getAmbienteMySQLDAO(){
+        return new AmbienteMySQLDAO();
+    }
+    
     public static EquipamentoMySQLDAO getEquipamentoMySQLDAO(){
         return new EquipamentoMySQLDAO();
     }

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,16 +19,22 @@ public class EquipamentoBean  implements Serializable {
     @Id
     private String codigoEquipamento;
     private String estado;
+    
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="codigoAmbiente")
+    private AmbienteBean ambiente;
+    
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="codigoAlarme"))
     private Collection<AlarmeBean> alarme;
+    
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Operacao", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="login"))
-    private Collection<MoradorBean> morador;
+    private Collection<MoradorBean> morador;     
 
     public String getCodigoEquipamento() {
         return codigoEquipamento;
@@ -44,6 +51,14 @@ public class EquipamentoBean  implements Serializable {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
+    public AmbienteBean getAmbiente() {
+        return ambiente;
+    }
+
+    public void setAmbiente(AmbienteBean ambiente) {
+        this.ambiente = ambiente;
+    }    
 
     public Collection<AlarmeBean> getAlarme() {
         return alarme;
@@ -60,5 +75,4 @@ public class EquipamentoBean  implements Serializable {
     public void setMorador(Collection<MoradorBean> morador) {
         this.morador = morador;
     }
-    
 }
