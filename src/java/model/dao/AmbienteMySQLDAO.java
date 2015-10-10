@@ -28,8 +28,6 @@ public class AmbienteMySQLDAO {
                 }
             }catch (HibernateException ex){
                 ex.printStackTrace();
-            }finally{
-                session.close();
             }
         }
         return ambiente;
@@ -41,10 +39,7 @@ public class AmbienteMySQLDAO {
         try{
             consulta = session.createQuery("from AmbienteBean");           
         }catch (HibernateException ex){
-                ex.printStackTrace();
-            
-        }finally{
-            session.close();
+            ex.printStackTrace();            
         }
         return consulta.list();
     }
@@ -62,8 +57,6 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;    
@@ -81,8 +74,6 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;            
@@ -100,8 +91,6 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;

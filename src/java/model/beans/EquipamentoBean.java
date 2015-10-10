@@ -19,6 +19,8 @@ public class EquipamentoBean  implements Serializable {
     @Id
     private String codigoEquipamento;
     private String estado;
+    private String pinoArduino;
+    private String descricaoEquipamento;
     
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="codigoAmbiente")
@@ -50,6 +52,22 @@ public class EquipamentoBean  implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+    
+    public void setPinoArduino(String pinoArduino){
+        this.pinoArduino = pinoArduino;
+    }
+    
+    public String getPinoArduino(){
+        return this.pinoArduino;
+    }
+    
+    public void setDescricaoEquipamento(String descricaoEquipamento){
+        this.descricaoEquipamento = descricaoEquipamento;
+    }
+    
+    public String getDescricaoEquipamento(){
+        return this.descricaoEquipamento;
     }
     
     public AmbienteBean getAmbiente() {

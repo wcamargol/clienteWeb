@@ -23,8 +23,6 @@ public class AlarmeMySQLDAO{
             }
             }catch (HibernateException ex){
                 ex.printStackTrace();
-            }finally{
-                session.close();
             }
         }
         return alarme;
@@ -38,9 +36,7 @@ public class AlarmeMySQLDAO{
         }catch (HibernateException ex){
                 ex.printStackTrace();
             
-        }finally{
-            session.close();
-        }        
+        }     
         return consulta.list();
     }
     
@@ -57,8 +53,6 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;    
@@ -76,8 +70,6 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;            
@@ -95,8 +87,6 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.MoradorBean;
+import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
 import model.dao.FabricaMySQLDAO;
 import model.dao.MoradorMySQLDAO;
@@ -36,6 +37,11 @@ public class LoginServlet extends HttpServlet {
         HttpSession sessao = request.getSession(true);
         sessao.setMaxInactiveInterval(120);
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
+        
+        AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
+        List listaAmbientesBean = ambienteMySQLDAO.listAmbienteBean();
+        sessao.setAttribute("listaAmbientes", listaAmbientesBean);
+        
         EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
         List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
         sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);

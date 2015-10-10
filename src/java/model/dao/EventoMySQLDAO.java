@@ -28,9 +28,6 @@ public class EventoMySQLDAO{
                 }
             }catch (HibernateException ex){
                 ex.printStackTrace();
-
-            }finally{
-                session.close();
             }
         }
         return evento;
@@ -43,8 +40,6 @@ public class EventoMySQLDAO{
             consulta = session.createQuery("from EventoBean");
         }catch (HibernateException ex){
             ex.printStackTrace();            
-        }finally{
-            session.close();
         }
         return consulta.list();
     }
@@ -62,8 +57,6 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;            
@@ -83,8 +76,6 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;   
@@ -103,8 +94,6 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;

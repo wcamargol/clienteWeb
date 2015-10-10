@@ -16,19 +16,29 @@ public class EquipamentoMySQLDAO{
     
     public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
         EquipamentoBean equipamento = null;
-        if(codigoEquipamento != null){            
-            Query consulta = session.createQuery("select a from EquipamentoBean a where "
-                + "a.codigoEquipamento = '" + codigoEquipamento + "'");
-            List l = consulta.list();
-            if (!l.isEmpty()){
-               equipamento = (EquipamentoBean)l.get(0);
+        if(codigoEquipamento != null){
+            try{
+                Query consulta = session.createQuery("select a from EquipamentoBean a where "
+                    + "a.codigoEquipamento = '" + codigoEquipamento + "'");
+                List l = consulta.list();
+                if (!l.isEmpty()){
+                   equipamento = (EquipamentoBean)l.get(0);
+                }
+            }catch (HibernateException ex){
+                ex.printStackTrace();
             }
         }
         return equipamento;
     }
     
     public List listEquipamentoBean(){
-        Query consulta = session.createQuery("from EquipamentoBean");
+        session = FabricaMySQLDAO.getSession();
+        Query consulta = null;
+        try{
+            consulta = session.createQuery("from EquipamentoBean");
+        }catch (HibernateException ex){
+            ex.printStackTrace();            
+        }
         return consulta.list();
     }
     
@@ -44,8 +54,6 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;    
@@ -62,8 +70,6 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;            
@@ -80,8 +86,6 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;

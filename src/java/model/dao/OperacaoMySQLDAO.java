@@ -27,26 +27,20 @@ public class OperacaoMySQLDAO{
                 }            
             }catch (HibernateException ex){
                 ex.printStackTrace();            
-            }finally{
-                session.close();
             }
         }
         return evento;
     }
     
     public List listaOperacaoBean(){
-        try{
-            
-        }catch (HibernateException ex){
-                ex.printStackTrace();
-            
-        }finally{
-            session.close();
-        }
         session = FabricaMySQLDAO.getSession();
-        Query consulta = session.createQuery("from Alarme ");
-        List listaOperacaoBean = consulta.list();
-        return listaOperacaoBean;
+        Query consulta = null;
+        try{
+            consulta = session.createQuery("from OperacaoBean");
+        }catch (HibernateException ex){
+                ex.printStackTrace();            
+        }
+        return consulta.list();
     }
     
     public boolean updateOperacaoBean(OperacaoBean evento) {
@@ -62,8 +56,6 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;            
@@ -82,8 +74,6 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;   
@@ -102,8 +92,6 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
-            }finally{
-                session.close();
             }
         }
         return sucesso;
