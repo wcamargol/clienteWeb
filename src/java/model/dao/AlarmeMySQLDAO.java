@@ -2,22 +2,21 @@ package model.dao;
 
 import java.util.List;
 import model.beans.AlarmeBean;
-import model.dao.interfaces.AlarmeDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class AlarmeMySQLDAO implements AlarmeDAO {
+public class AlarmeMySQLDAO{
     private Session session;
     
-    public AlarmeBean recuperar(String codigo){
+    public AlarmeBean getAlarmeBean(String codigo){
         AlarmeBean alarme = null;
         if(codigo != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Alarme a where "
+            Query consulta = session.createQuery("select a from Alarme a where "
                 + "a.codigoAlarme = '"+codigo+"'");
-            List l = q.list();
+            List l = consulta.list();
             if (!l.isEmpty()){
                alarme = (AlarmeBean)l.get(0);
             }
@@ -25,7 +24,14 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
         return alarme;
     }
     
-    public boolean atualizar(AlarmeBean alarme){
+    public List listAlarmeBean(){
+        session = FabricaMySQLDAO.getSession();
+        Query consulta = session.createQuery("from Alarme ");
+        List listaAlarmeBean = consulta.list();
+        return listaAlarmeBean;
+    }
+    
+    public boolean updateAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();
@@ -44,7 +50,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
         }
         return sucesso;    
     }
-    public boolean salvar(AlarmeBean alarme){
+    public boolean saveAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();
@@ -63,7 +69,7 @@ public class AlarmeMySQLDAO implements AlarmeDAO {
         }
         return sucesso;            
     }
-    public boolean apagar(AlarmeBean alarme){
+    public boolean deleteAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
             session = FabricaMySQLDAO.getSession();

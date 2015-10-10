@@ -13,17 +13,13 @@ import model.beans.EventoBean;
 import model.beans.EventoIdBean;
 import model.beans.MoradorBean;
 import model.dao.FabricaMySQLDAO;
-import model.dao.interfaces.AlarmeDAO;
-import model.dao.interfaces.EquipamentoDAO;
-import model.dao.interfaces.EventoDAO;
-import model.dao.interfaces.MoradorDAO;
-
+import model.dao.MoradorMySQLDAO;
 public class main {
     public static void main(String args[]) throws NoSuchAlgorithmException{
         
         DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
         formatadorData.setLenient(false); 
-        MoradorDAO moradorDAO = FabricaMySQLDAO.getMoradorDAO();
+        MoradorMySQLDAO moradorDAO = FabricaMySQLDAO.getMoradorMySQLDAO();
         
         
         MoradorBean moradorBean = new MoradorBean();        
@@ -38,7 +34,7 @@ public class main {
             ex.printStackTrace();
         }
         //moradorDAO.salvar(moradorBean);
-        MoradorBean m = moradorDAO.recuperar("walter12");
+        MoradorBean m = moradorDAO.getMoradorBean("walter12");
         
                
         System.out.println(m.getLogin());

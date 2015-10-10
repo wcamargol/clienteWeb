@@ -14,6 +14,8 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 
 --%>
 
+<%@page import="model.beans.EquipamentoBean"%>
+<%@page import="java.util.List"%>
 <%@page import="model.beans.MoradorBean"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%
@@ -24,7 +26,7 @@ String comando,operacao, estado;
 <html>
     <head>
         <title>SSHouse</title>
-        <meta charset="ISO-8859-1">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         <link href="css/estilosHome.css" rel="stylesheet" type="text/css" />
     </head>
@@ -35,8 +37,19 @@ String comando,operacao, estado;
         <nav>
         <ul class="hnavbar">
             <li><a href="#">Sala</a>
-                <ul>
-                    <li><a href="ClienteWebServlet?comando=SL01L2">Ilumina&ccedil;&atilde;o</a></li>                     
+                <ul><!--% 
+                        HttpSession sessao = request.getSession(true);
+                        List listaEquipamentosBean = (List) sessao.getAttribute("listaEquipamentos");
+                        if (listaEquipamentosBean !=null) {     
+                            for(Object obj : listaEquipamentosBean){
+                                EquipamentoBean equipamento = (EquipamentoBean) obj;
+                    %>
+                                <li><a href="ClienteWebServlet?comando=SL01L2">Ilumina&ccedil;&atilde;o</a></li> 
+                          }
+                        }
+                        
+                    -->
+                    <li><a href="ClienteWebServlet?comando=SL01D2">Ilumina&ccedil;&atilde;o</a></li>                     
                     <li><a href="#heading">Restructure</a></li>
                     <li><a href="#heading">Drop down</a></li>
                 </ul>

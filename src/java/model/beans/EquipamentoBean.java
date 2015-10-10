@@ -17,7 +17,7 @@ public class EquipamentoBean  implements Serializable {
     
     @Id
     private String codigoEquipamento;
-    private int estado;
+    private String estado;
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
@@ -37,11 +37,11 @@ public class EquipamentoBean  implements Serializable {
         this.codigoEquipamento = codigoEquipamento;
     }
 
-    public int getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 

@@ -3,6 +3,7 @@ package controller.servlets;
 import model.Hash;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.MoradorBean;
+import model.dao.EquipamentoMySQLDAO;
 import model.dao.FabricaMySQLDAO;
-import model.dao.interfaces.MoradorDAO;
+import model.dao.MoradorMySQLDAO;
 
 @WebServlet(name = "ControleAcessoServlet", urlPatterns = {"/ControleAcessoServlet"})
 public class LoginServlet extends HttpServlet {
@@ -34,6 +36,9 @@ public class LoginServlet extends HttpServlet {
         HttpSession sessao = request.getSession(true);
         sessao.setMaxInactiveInterval(120);
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
+         /*EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
+        List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
+        sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);*/
         
         if(moradorBean == null){
             String login = request.getParameter("login");
@@ -42,10 +47,10 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("erro", "Sua sessão expirou.");
             }else{
                 if (login != null && !login.equals("") && senha != null && !senha.equals("")){
-                    MoradorDAO moradorDAO = FabricaMySQLDAO.getMoradorDAO();
-                    moradorBean = moradorDAO.recuperar(login);
+                    MoradorMySQLDAO moradorMySQLDAO = FabricaMySQLDAO.getMoradorMySQLDAO();
+                    moradorBean = moradorMySQLDAO.getMoradorBean(login);
                     if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
-                        sessao.setAttribute("loginSSHouse",moradorBean);
+                        sessao.setAttribute("loginSSHouse",moradorBean);                        
                         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
                         rd.forward(request,response);
                     }else {

@@ -38,17 +38,19 @@ public class ClienteWebServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         
-        String comando =null,
-        retorno = null;
-        comando = request.getParameter("comando");
-        if (comando != null){            
-            Cliente cliente = new Cliente();                
-            retorno = cliente.enviaComando(comando);
-            System.out.println(retorno);
-            request.setAttribute("eqto", comando.subSequence(0, 4));
-            request.setAttribute("estado", retorno.substring(7));
-        }
+        String retorno = null,
+            comando = request.getParameter("comando");           
         
+        if (comando != null){            
+            Cliente cliente = new Cliente();
+            retorno = cliente.enviaComando(comando.substring(4));
+            request.setAttribute("eqto", comando.subSequence(0, 4));
+            if (retorno.equals("L") || retorno.equals("D")){
+                request.setAttribute("estado",retorno);
+            }else {
+                request.setAttribute("estado",comando.substring(4));                
+                }          
+        }
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request,response);
     }

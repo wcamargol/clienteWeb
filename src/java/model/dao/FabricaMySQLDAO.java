@@ -1,10 +1,4 @@
 package model.dao;
-
-import model.dao.interfaces.AlarmeDAO;
-import model.dao.interfaces.EquipamentoDAO;
-import model.dao.interfaces.EventoDAO;
-import model.dao.interfaces.MoradorDAO;
-import model.dao.interfaces.OperacaoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,23 +23,23 @@ public class FabricaMySQLDAO {
         return session;
     }
     
-    public static AlarmeDAO getAlarmeDAO(){
+    public static AlarmeMySQLDAO getAlarmeMySQLDAO(){
         return new AlarmeMySQLDAO();
     }
     
-    public static EquipamentoDAO getEquipamentoDAO(){
+    public static EquipamentoMySQLDAO getEquipamentoMySQLDAO(){
         return new EquipamentoMySQLDAO();
     }
     
-    public static EventoDAO getEventoDAO(){
+    public static EventoMySQLDAO getEventoDAO(){
         return new EventoMySQLDAO();
     }
     
-    public static MoradorDAO getMoradorDAO(){
+    public static MoradorMySQLDAO getMoradorMySQLDAO(){
         return new MoradorMySQLDAO();
     }
     
-    public static OperacaoDAO getOperacaoDAO(){
+    public static OperacaoMySQLDAO getOperacaoMySQLDAO(){
         return new OperacaoMySQLDAO();
     }
 }

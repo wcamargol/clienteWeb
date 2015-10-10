@@ -2,22 +2,21 @@ package model.dao;
 
 import java.util.List;
 import model.beans.EquipamentoBean;
-import model.dao.interfaces.EquipamentoDAO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class EquipamentoMySQLDAO implements EquipamentoDAO {
+public class EquipamentoMySQLDAO{
      private Session session;
     
-    public EquipamentoBean recuperar(String codigoEquipamento){
+    public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
         EquipamentoBean equipamento = null;
         if(codigoEquipamento != null){
             session = FabricaMySQLDAO.getSession();
-            Query q = session.createQuery("select a from Equipamento a where "
+            Query consulta = session.createQuery("select a from Equipamento a where "
                 + "a.codigoEquipamento = '" + codigoEquipamento + "'");
-            List l = q.list();
+            List l = consulta.list();
             if (!l.isEmpty()){
                equipamento = (EquipamentoBean)l.get(0);
             }
@@ -25,7 +24,14 @@ public class EquipamentoMySQLDAO implements EquipamentoDAO {
         return equipamento;
     }
     
-    public boolean atualizar(EquipamentoBean equipamento){
+    public List listEquipamentoBean(){
+        session = FabricaMySQLDAO.getSession();
+        Query consulta = session.createQuery("from Equipamento ");
+        List listaEquipamentoBean = consulta.list();
+        return listaEquipamentoBean;
+    }
+    
+    public boolean updateEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
             session = FabricaMySQLDAO.getSession();
@@ -44,7 +50,7 @@ public class EquipamentoMySQLDAO implements EquipamentoDAO {
         }
         return sucesso;    
     }
-    public boolean salvar(EquipamentoBean equipamento){
+    public boolean saveEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
             session = FabricaMySQLDAO.getSession();
@@ -63,7 +69,7 @@ public class EquipamentoMySQLDAO implements EquipamentoDAO {
         }
         return sucesso;            
     }
-    public boolean apagar(EquipamentoBean equipamento){
+    public boolean deleteEquipamentoBean(EquipamentoBean equipamento){
         boolean sucesso = false;
         if(equipamento != null){
             session = FabricaMySQLDAO.getSession();
