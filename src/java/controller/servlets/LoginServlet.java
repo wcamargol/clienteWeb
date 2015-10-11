@@ -3,7 +3,6 @@ package controller.servlets;
 import model.Hash;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.MoradorBean;
-import model.dao.AmbienteMySQLDAO;
-import model.dao.EquipamentoMySQLDAO;
 import model.dao.FabricaMySQLDAO;
 import model.dao.MoradorMySQLDAO;
 
-@WebServlet(name = "LoginAtualizaServlet", urlPatterns = {"/LoginAtualizaServlet"})
-public class LoginAtualizaServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,14 +35,6 @@ public class LoginAtualizaServlet extends HttpServlet {
         sessao.setMaxInactiveInterval(120);
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
         
-        AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
-        List listaAmbientesBean = ambienteMySQLDAO.listAmbienteBean();
-        sessao.setAttribute("listaAmbientes", listaAmbientesBean);
-        
-        EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
-        List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
-        sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);
-        
         if(moradorBean == null){
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
@@ -57,7 +46,7 @@ public class LoginAtualizaServlet extends HttpServlet {
                     moradorBean = moradorMySQLDAO.getMoradorBean(login);
                     if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
                         sessao.setAttribute("operadorSSHouse",moradorBean);                        
-                        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                        RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
                         rd.forward(request,response);
                     }else {
                         request.setAttribute("erro", "Login ou senha inválidos.");                    
@@ -66,10 +55,11 @@ public class LoginAtualizaServlet extends HttpServlet {
                     request.setAttribute("erro", "Todos os campos deve ser preenchidos.");
                 }                
             }
+            
             RequestDispatcher rd = request.getRequestDispatcher("homeLogin.jsp");
             rd.forward(request, response);
         }else{
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
             rd.forward(request,response);
         }
     }
