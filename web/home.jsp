@@ -44,6 +44,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 <%                  List listaEquipamentosBean = (List) sessao.getAttribute("listaEquipamentos");
                     for(Object objEqui : listaEquipamentosBean){
                         EquipamentoBean equipamento = (EquipamentoBean) objEqui;
+                        comando = equipamento.getCodigoEquipamento();
                         if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())){
                             if (equipamento.getEstado().equals("L")){
                                comando = "D";
