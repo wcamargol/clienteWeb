@@ -35,7 +35,7 @@ header h1 {
     text-shadow: none
 }
 
-header p{
+header p a{
     padding-top: 5px;
     float:right;
     color: #ffffff;
@@ -155,8 +155,7 @@ footer {
 footer p {
     display:none;
     text-align : center;
-    color: #fefefe;
-    padding: 2% 0
+    padding: 2% 0;
 } 
 
 footer p a , footer p a:visited {
@@ -216,6 +215,10 @@ footer p a , footer p a:visited {
         display: block !important;
         margin: 20px auto 0 auto !important;
         background: #2e2e2e;
+    }
+    
+    footer p a{
+        color: #ffffff;
     }
     
     header h1 {

@@ -30,7 +30,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
     <body onload="window.scrollTo(0, 1);">
         <header id="heading">
             <h1>Safe and Smart<span class="slogan">&nbsp;HOUSE</span></h1>
-            <p>Sair</p>
+            <p><a href="LogoffServlet">Sair</a></p>
         </header>
         <nav>
             <ul class="hnavbar">
@@ -70,7 +70,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
             </ul>
         </nav>
         <footer>
-            <p>Sair</p>
+            <p><a href="LogoffServlet">Sair</a></p>
         </footer>
     </body>
 </html>
