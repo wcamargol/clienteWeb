@@ -19,7 +19,7 @@ public class AmbienteMySQLDAO {
         AmbienteBean ambiente = null;
         if(codigo != null){
             try{
-                session = FabricaMySQLDAO.getSession();
+                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select a from AmbienteBean a where "
                     + "a.codigoAmbiente = '"+codigo+"'");
                 List l = consulta.list();
@@ -34,20 +34,24 @@ public class AmbienteMySQLDAO {
     }
     
     public List listAmbienteBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaAmbientesBean = null;
         Query consulta = null;
-        try{
-            consulta = session.createQuery("from AmbienteBean");           
+        try{            
+            consulta = session.createQuery("from AmbienteBean");
+            listaAmbientesBean = consulta.list();
         }catch (HibernateException ex){
-            ex.printStackTrace();            
+                ex.printStackTrace();            
+        }finally{
+            session.close();
         }
-        return consulta.list();
+        return listaAmbientesBean;
     }
     
     public boolean updateAmbienteBean(AmbienteBean ambiente){
         boolean sucesso = false;
         if(ambiente != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -57,6 +61,8 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;    
@@ -64,7 +70,7 @@ public class AmbienteMySQLDAO {
     public boolean saveAmbienteBean(AmbienteBean ambiente){
         boolean sucesso = false;
         if(ambiente != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -74,6 +80,8 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -81,7 +89,7 @@ public class AmbienteMySQLDAO {
     public boolean deleteAmbienteBean(AmbienteBean ambiente){
         boolean sucesso = false;
         if(ambiente != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -91,6 +99,8 @@ public class AmbienteMySQLDAO {
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;

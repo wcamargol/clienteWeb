@@ -46,8 +46,8 @@
                 <td>Opera&ccedil;&atilde;o</td>
             </tr>
 <%        
-            List listaOperacoesBean1 = (List) request.getAttribute("listaOperacoes");
-            for(Object obj : listaOperacoesBean1){
+           
+            for(Object obj : listaOperacoesBean){
                 OperacaoBean operacaoBean = (OperacaoBean) obj;
                 
 %>

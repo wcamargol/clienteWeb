@@ -25,6 +25,10 @@ public class LogoffServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessao = request.getSession(true);
         sessao.removeAttribute("operadorSSHouse"); 
+        sessao.removeAttribute("listaAmbientes"); 
+        sessao.removeAttribute("listaEquipamentos");
+        sessao.removeAttribute("listaOperacoes");
+        sessao.removeAttribute("listaEventos");
         response.sendRedirect("homeLogin.jsp");
     }
 

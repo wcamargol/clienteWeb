@@ -18,7 +18,7 @@ import model.beans.OperacaoBean;
 import model.beans.OperacaoIdBean;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
-import model.dao.FabricaMySQLDAO;
+import model.dao.FabricaSessoes;
 import model.dao.OperacaoMySQLDAO;
 
 public class ClienteWebServlet extends HttpServlet {
@@ -47,8 +47,7 @@ public class ClienteWebServlet extends HttpServlet {
             MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
             String retorno = null, operacao = null,
             comando = request.getParameter("comando");           
-            operacao = comando.substring(4,5);
-            
+            operacao = comando.substring(4,5);            
             if (comando != null){
                 Cliente cliente = new Cliente();
                 retorno = cliente.enviaComando(comando.substring(4));
@@ -59,6 +58,36 @@ public class ClienteWebServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
             rd.forward(request,response);
         }       
+    }
+    
+    public void salvaOperacao(String operacao, String comando, MoradorBean moradorBean){        
+        AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
+        AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 2));
+
+        EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
+        EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(2, 4));
+        equipamentoBean.setEstado(operacao);
+        equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
+
+        OperacaoIdBean operacaoIdBean = new OperacaoIdBean();
+        operacaoIdBean.setEquipamento(equipamentoBean);
+        operacaoIdBean.setMorador(moradorBean);                
+        OperacaoBean operacaoBean = new OperacaoBean();
+        operacaoBean.setId(operacaoIdBean);
+        operacaoBean.setDataOperacao(new Date());
+        operacaoBean.setHoraOperacao(new Date());                
+        String descricaoOperacao = equipamentoBean.getDescricaoEquipamento()
+            + " " + ambienteBean.getDescricaoAmbiente();
+        if (operacao.equals("L")){
+            descricaoOperacao += " LIGADO";                    
+        }else if (operacao.equals("D")){
+            descricaoOperacao += " DESLIGADO";
+        } else{
+            descricaoOperacao = "Comando não executado";
+        }
+        operacaoBean.setDescricaoOperacao(descricaoOperacao);                
+        OperacaoMySQLDAO operacaoMySQLDAO = new OperacaoMySQLDAO();
+        operacaoMySQLDAO.saveOperacaoBean(operacaoBean); 
     }
     
     /**
@@ -96,35 +125,4 @@ public class ClienteWebServlet extends HttpServlet {
             ex.printStackTrace();
         }        
     }
-    
-    public void salvaOperacao(String operacao, String comando, MoradorBean moradorBean){        
-        AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
-        AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 2));
-
-        EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
-        EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(2, 4));
-        equipamentoBean.setEstado(operacao);
-        equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
-
-        OperacaoIdBean operacaoIdBean = new OperacaoIdBean();
-        operacaoIdBean.setEquipamento(equipamentoBean);
-        operacaoIdBean.setMorador(moradorBean);                
-        OperacaoBean operacaoBean = new OperacaoBean();
-        operacaoBean.setId(operacaoIdBean);
-        operacaoBean.setDataOperacao(new Date());
-        operacaoBean.setHoraOperacao(new Date());                
-        String descricaoOperacao = equipamentoBean.getDescricaoEquipamento()
-            + " " + ambienteBean.getDescricaoAmbiente();
-        if (operacao.equals("L")){
-            descricaoOperacao += " LIGADO";                    
-        }else if (operacao.equals("D")){
-            descricaoOperacao += " DESLIGADO";
-        } else{
-            descricaoOperacao = "Comando não executado";
-        }
-        operacaoBean.setDescricaoOperacao(descricaoOperacao);                
-        OperacaoMySQLDAO operacaoMySQLDAO = FabricaMySQLDAO.getOperacaoMySQLDAO();
-        operacaoMySQLDAO.saveOperacaoBean(operacaoBean); 
-    }
-    
 }

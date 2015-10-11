@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
-public class FabricaMySQLDAO {
+public class FabricaSessoes {
     private static SessionFactory sessionFactory;
     private static final ThreadLocal<Session> threadLocal = new ThreadLocal<>();
 
@@ -21,29 +21,5 @@ public class FabricaMySQLDAO {
         session = sessionFactory.openSession();
         threadLocal.set(session);
         return session;
-    }
-    
-    public static AlarmeMySQLDAO getAlarmeMySQLDAO(){
-        return new AlarmeMySQLDAO();
-    }
-    
-    public static AmbienteMySQLDAO getAmbienteMySQLDAO(){
-        return new AmbienteMySQLDAO();
-    }
-    
-    public static EquipamentoMySQLDAO getEquipamentoMySQLDAO(){
-        return new EquipamentoMySQLDAO();
-    }
-    
-    public static EventoMySQLDAO getEventoDAO(){
-        return new EventoMySQLDAO();
-    }
-    
-    public static MoradorMySQLDAO getMoradorMySQLDAO(){
-        return new MoradorMySQLDAO();
-    }
-    
-    public static OperacaoMySQLDAO getOperacaoMySQLDAO(){
-        return new OperacaoMySQLDAO();
     }
 }

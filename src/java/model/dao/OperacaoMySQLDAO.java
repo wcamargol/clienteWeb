@@ -15,7 +15,7 @@ public class OperacaoMySQLDAO{
         OperacaoBean evento = null;
         if(id != null){
             try{
-                session = FabricaMySQLDAO.getSession();
+                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select a from OperacaoBean a "
                     + "where a.id.morador.login = ? "
                     + "and a.id.equipamento.codigoEquipamento = ? ");
@@ -27,26 +27,32 @@ public class OperacaoMySQLDAO{
                 }            
             }catch (HibernateException ex){
                 ex.printStackTrace();            
+            }finally{
+                session.close();
             }
         }
         return evento;
     }
     
     public List listaOperacaoBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaOperacoesBean = null;
         Query consulta = null;
-        try{
+        try{            
             consulta = session.createQuery("from OperacaoBean");
+            listaOperacoesBean = consulta.list();
         }catch (HibernateException ex){
                 ex.printStackTrace();            
+        }finally{
+            session.close();
         }
-        return consulta.list();
+        return listaOperacoesBean;
     }
     
     public boolean updateOperacaoBean(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -56,6 +62,8 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -64,7 +72,7 @@ public class OperacaoMySQLDAO{
     public boolean saveOperacaoBean(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -74,6 +82,8 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;   
@@ -82,7 +92,7 @@ public class OperacaoMySQLDAO{
     public boolean deleteOperacaoBean(OperacaoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -92,6 +102,8 @@ public class OperacaoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;

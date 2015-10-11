@@ -22,17 +22,17 @@ public class EquipamentoBean  implements Serializable {
     private String pinoArduino;
     private String descricaoEquipamento;
     
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="codigoAmbiente")
     private AmbienteBean ambiente;
     
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="codigoAlarme"))
     private Collection<AlarmeBean> alarme;
     
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name="Operacao", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoEquipamento"),
         inverseJoinColumns=@JoinColumn(name="login"))

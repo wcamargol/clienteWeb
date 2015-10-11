@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,8 +17,12 @@ public class EventoBean  implements Serializable {
 
     @EmbeddedId
     private EventoIdBean id;
+    
+    @Id
     @Temporal(TemporalType.DATE)
     private Date dataEvento;
+    
+    @Id
     @Temporal(TemporalType.TIME)
     private Date horaEvento;
 

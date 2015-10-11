@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,12 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
-import model.dao.FabricaMySQLDAO;
+import model.dao.EventoMySQLDAO;
+import model.dao.FabricaSessoes;
+import model.dao.OperacaoMySQLDAO;
 
-/**
- *
- * @author lubuntu
- */
 @WebServlet(name = "AtualizaServlet", urlPatterns = {"/AtualizaServlet"})
 public class AtualizaServlet extends HttpServlet {
 
@@ -38,15 +31,27 @@ public class AtualizaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession sessao = request.getSession(true);
+        //HttpSession sessao = request.getSession(true);
         
-        AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
+        AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
         List listaAmbientesBean = ambienteMySQLDAO.listAmbienteBean();
-        sessao.setAttribute("listaAmbientes", listaAmbientesBean);
+        request.setAttribute("listaAmbientes", listaAmbientesBean);
         
-        EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
+        EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
         List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
-        sessao.setAttribute("listaEquipamentos", listaEquipamentosBean);
+        request.setAttribute("listaEquipamentos", listaEquipamentosBean);
+        
+        OperacaoMySQLDAO operacaoMySQLDAO = new OperacaoMySQLDAO();
+        List listaOperacoesBean = operacaoMySQLDAO.listaOperacaoBean();
+        if (listaOperacoesBean != null){
+            request.setAttribute("listaOperacoes", listaOperacoesBean);
+        }
+        
+        EventoMySQLDAO eventoMySQLDAO = new EventoMySQLDAO();
+        List listaEventosBean = eventoMySQLDAO.listEventoBean();
+        if (listaEventosBean != null){
+            request.setAttribute("listaEventos", listaEventosBean);
+        }
         
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request,response);

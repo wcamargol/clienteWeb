@@ -14,7 +14,7 @@ public class MoradorMySQLDAO{
         MoradorBean morador = null;
         if (login != null){
             try{
-                session = FabricaMySQLDAO.getSession();
+                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select m from MoradorBean "
                     + "m where m.login = '"+login+"'");
                 List l = consulta.list();
@@ -29,21 +29,24 @@ public class MoradorMySQLDAO{
     }
     
     public List listMoradorBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaMoradoresBean = null;
         Query consulta = null;
         try{            
             consulta = session.createQuery("from MoradorBean");
+            listaMoradoresBean = consulta.list();
         }catch (HibernateException ex){
-                ex.printStackTrace();
-            
+                ex.printStackTrace();            
+        }finally{
+            session.close();
         }
-        return consulta.list();
+        return listaMoradoresBean;
     }
     
     public boolean updateMoradorBean(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -53,6 +56,8 @@ public class MoradorMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;    
@@ -60,7 +65,7 @@ public class MoradorMySQLDAO{
     public boolean saveMoradorBean(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -70,6 +75,8 @@ public class MoradorMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -77,7 +84,7 @@ public class MoradorMySQLDAO{
     public boolean deleteMoradorBean(MoradorBean morador){
         boolean sucesso = false;
         if(morador != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -87,6 +94,8 @@ public class MoradorMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;

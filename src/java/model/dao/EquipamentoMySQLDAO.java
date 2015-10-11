@@ -10,10 +10,6 @@ import org.hibernate.Transaction;
 public class EquipamentoMySQLDAO{
     private Session session;
     
-    EquipamentoMySQLDAO (){
-        session = FabricaMySQLDAO.getSession();
-    }
-    
     public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
         EquipamentoBean equipamento = null;
         if(codigoEquipamento != null){
@@ -32,14 +28,18 @@ public class EquipamentoMySQLDAO{
     }
     
     public List listEquipamentoBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaEquipamentosBean = null;
         Query consulta = null;
-        try{
+        try{            
             consulta = session.createQuery("from EquipamentoBean");
+            listaEquipamentosBean = consulta.list();
         }catch (HibernateException ex){
-            ex.printStackTrace();            
+                ex.printStackTrace();            
+        }finally{
+            session.close();
         }
-        return consulta.list();
+        return listaEquipamentosBean;
     }
     
     public boolean updateEquipamentoBean(EquipamentoBean equipamento){
@@ -54,6 +54,8 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;    
@@ -70,6 +72,8 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -86,6 +90,8 @@ public class EquipamentoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;

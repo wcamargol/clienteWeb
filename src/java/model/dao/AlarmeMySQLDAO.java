@@ -13,7 +13,7 @@ public class AlarmeMySQLDAO{
     public AlarmeBean getAlarmeBean(String codigo){        
         AlarmeBean alarme = null;
         if (codigo != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             try{
             Query consulta = session.createQuery("select a from AlarmeBean a where "
                 + "a.codigoAlarme = '"+codigo+"'");
@@ -29,21 +29,24 @@ public class AlarmeMySQLDAO{
     }
     
     public List listAlarmeBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaAlarmesBean = null;
         Query consulta = null;
         try{            
-            consulta = session.createQuery("from AlarmeBean ");
+            consulta = session.createQuery("from AlarmeBean");
+            listaAlarmesBean = consulta.list();
         }catch (HibernateException ex){
-                ex.printStackTrace();
-            
-        }     
-        return consulta.list();
+                ex.printStackTrace();            
+        }finally{
+            session.close();
+        }
+        return listaAlarmesBean;
     }
     
     public boolean updateAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -53,6 +56,8 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;    
@@ -60,7 +65,7 @@ public class AlarmeMySQLDAO{
     public boolean saveAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -70,6 +75,8 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -77,7 +84,7 @@ public class AlarmeMySQLDAO{
     public boolean deleteAlarmeBean(AlarmeBean alarme){
         boolean sucesso = false;
         if(alarme != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -87,6 +94,8 @@ public class AlarmeMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;

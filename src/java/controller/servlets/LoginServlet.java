@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.MoradorBean;
-import model.dao.FabricaMySQLDAO;
 import model.dao.MoradorMySQLDAO;
 
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
@@ -39,10 +38,10 @@ public class LoginServlet extends HttpServlet {
             String login = request.getParameter("login");
             String senha = request.getParameter("senha");
             if (sessao.isNew()){
-                request.setAttribute("erro", "Sua sessão expirou.");
+                request.setAttribute("erro", "Sessão expirada.");
             }else{
                 if (login != null && !login.equals("") && senha != null && !senha.equals("")){
-                    MoradorMySQLDAO moradorMySQLDAO = FabricaMySQLDAO.getMoradorMySQLDAO();
+                    MoradorMySQLDAO moradorMySQLDAO = new MoradorMySQLDAO();
                     moradorBean = moradorMySQLDAO.getMoradorBean(login);
                     if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
                         sessao.setAttribute("operadorSSHouse",moradorBean);                        
@@ -52,7 +51,7 @@ public class LoginServlet extends HttpServlet {
                         request.setAttribute("erro", "Login ou senha inválidos.");                    
                     }  
                 }else{
-                    request.setAttribute("erro", "Todos os campos deve ser preenchidos.");
+                    request.setAttribute("erro", "Preencha todos os campos");
                 }                
             }
             

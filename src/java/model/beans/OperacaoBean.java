@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,12 +16,13 @@ public class OperacaoBean  implements java.io.Serializable {
     
     @EmbeddedId
     private OperacaoIdBean id;
-    
+    @Id
     @Temporal(TemporalType.DATE)
     private Date dataOperacao;
-    
+    @Id
     @Temporal(TemporalType.TIME)
     private Date horaOperacao;
+    
     private String descricaoOperacao;
 
     public OperacaoIdBean getId() {

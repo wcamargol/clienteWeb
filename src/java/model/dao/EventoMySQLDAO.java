@@ -16,7 +16,7 @@ public class EventoMySQLDAO{
         EventoBean evento = null;
         if(id != null){
             try{
-                session = FabricaMySQLDAO.getSession();
+                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select a from EventoBean a "
                     + "where a.id.alarme.codigoAlarme = ? "
                     + "and a.id.equipamento.codigoEquipamento = ? ");
@@ -34,20 +34,24 @@ public class EventoMySQLDAO{
     }
     
     public List listEventoBean(){
-        session = FabricaMySQLDAO.getSession();
+        session = FabricaSessoes.getSession();
+        List listaEventosBean = null;
         Query consulta = null;
-        try{
+        try{            
             consulta = session.createQuery("from EventoBean");
+            listaEventosBean = consulta.list();
         }catch (HibernateException ex){
-            ex.printStackTrace();            
+                ex.printStackTrace();            
+        }finally{
+            session.close();
         }
-        return consulta.list();
+        return listaEventosBean;
     }
     
     public boolean updateEventoBean(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -57,6 +61,8 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;            
@@ -66,7 +72,7 @@ public class EventoMySQLDAO{
     public boolean saveEventoBean(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -76,6 +82,8 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;   
@@ -84,7 +92,7 @@ public class EventoMySQLDAO{
     public boolean deleteEventoBean(EventoBean evento) {
         boolean sucesso = false;
         if(evento != null){
-            session = FabricaMySQLDAO.getSession();
+            session = FabricaSessoes.getSession();
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
@@ -94,6 +102,8 @@ public class EventoMySQLDAO{
             }catch(HibernateException ex){
                 ex.printStackTrace();
                 tx.rollback();
+            }finally{
+                session.close();
             }
         }
         return sucesso;
