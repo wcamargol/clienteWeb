@@ -121,7 +121,23 @@ nav {
     float: left;
 }
 
-footer {
+#conteudo{
+    width:80%;
+    margin: auto;
+}
+
+#operacoes{
+    width: 50%;
+    float:left;
+}
+
+#eventos{
+    width: 50%;
+    padding:0 0 20% 0;
+    float:right;
+}
+
+#rodape {
     width: 100%;
     background: #2e2e2e;
     float: left
@@ -152,7 +168,7 @@ footer {
     clear:both
 }
 
-footer p {
+#rodape p {
     display:none;
     text-align : center;
     padding: 2% 0;
@@ -210,14 +226,23 @@ footer p a , footer p a:visited {
         background: #2e2e2e;
     }
     
-    footer p {
+    #operacoes{
+        display:none;
+    }
+    
+    #eventos{
+        display:none;
+    }
+    
+    
+    #rodape p {
         width: 90% !important;
         display: block !important;
         margin: 20px auto 0 auto !important;
         background: #2e2e2e;
     }
     
-    footer p a{
+    #rodape p a{
         color: #ffffff;
     }
     

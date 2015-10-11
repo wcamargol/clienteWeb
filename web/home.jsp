@@ -23,54 +23,21 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 <html>
     <head>
         <title>Free Liquid Web Template #001 - Responsive Web Design</title>
-        <meta charset="UTF-8"><!-- Remove if defined in .htaccess -->
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/estilosHome.css" type="text/css" >
     </head>
     <body onload="window.scrollTo(0, 1);">
-        <header id="heading">
-            <h1>Safe and Smart<span class="slogan">&nbsp;HOUSE</span></h1>
-            <p><a href="LogoffServlet">Sair</a></p>
-        </header>
-        <nav>
-            <ul class="hnavbar">
-<%
-                HttpSession sessao = request.getSession(true);                
-                List listaAmbienteBean = (List) sessao.getAttribute("listaAmbientes");
-                String strAmb, comando, operacao;
-                for(Object objAmb : listaAmbienteBean){
-                    AmbienteBean ambiente = (AmbienteBean) objAmb;                    
-%>
-                <li><a><%=ambiente.getDescricaoAmbiente()%></a>
-                    <ul>
-<%                  List listaEquipamentosBean = (List) sessao.getAttribute("listaEquipamentos");
-                    for(Object objEqui : listaEquipamentosBean){
-                        EquipamentoBean equipamento = (EquipamentoBean) objEqui;
-                        comando = ambiente.getCodigoAmbiente() + equipamento.getCodigoEquipamento();
-                        if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())){
-                            if (equipamento.getEstado().equals("L")){
-                               comando += "D";
-                               operacao = "Desligar ";
-                            }else{
-                                comando += "L";
-                                operacao = "Ligar ";
-                            }
-                            comando += equipamento.getPinoArduino();                       
-%>
-                        <li><a href="ClienteWebServlet?comando=<%=comando%>"><%=operacao%><%=equipamento.getDescricaoEquipamento()%></a></li>
-<%
-                        }
-                    }
-%>
-                   </ul>
-                </li>  
-<%                  
-                }
-%>
-            </ul>
-        </nav>
-        <footer>
-            <p><a href="LogoffServlet">Sair</a></p>
-        </footer>
+        <div id="pagina">
+            <div id="cabecalho">
+                <%@include file="cabecalho.jsp" %>
+            </div>
+            <div id="conteudo">
+                <%@include file="operacoes.jsp" %>
+            </div>
+            <div id="rodape">
+                <p><a href="LogoffServlet">Sair</a></p>
+            </div>
+        </div>
     </body>
 </html>

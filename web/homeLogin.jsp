@@ -19,7 +19,7 @@
         <%   HttpSession sessao = request.getSession(true);
             if (sessao.getAttribute("operadorSSHouse")!=null) {
         %>
-            <jsp:forward page="LoginAtualizaServlet"></jsp:forward>
+            <jsp:forward page="LoginServlet"></jsp:forward>
         <%
         }else{ %>
 	<div class="login">
@@ -32,7 +32,7 @@
                 <h2><%= request.getAttribute("erro") %></h2>
                 <%}%>
                 </div>
-                <form class="login-form" method="post" action="LoginAtualizaServlet">
+                <form class="login-form" method="post" action="LoginServlet">
                     <div class="control-group">
                     <input type="text" class="login-field" name="login" value="" placeholder="login" id="nomeLogin">
                     <label class="login-field-icon fui-user" for="nomeLogin"></label>
