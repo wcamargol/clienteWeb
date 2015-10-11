@@ -14,6 +14,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 
 --%>
 
+<%@page import="model.beans.MoradorBean"%>
 <%@page import="model.beans.EquipamentoBean"%>
 <%@page import="model.beans.AmbienteBean"%>
 <%@page import="java.util.List"%>
@@ -33,7 +34,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
         <nav>
             <ul class="hnavbar">
 <%
-                HttpSession sessao = request.getSession(true);
+                HttpSession sessao = request.getSession(true);                
                 List listaAmbienteBean = (List) sessao.getAttribute("listaAmbientes");
                 String strAmb, comando, operacao;
                 for(Object objAmb : listaAmbienteBean){
@@ -44,13 +45,13 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 <%                  List listaEquipamentosBean = (List) sessao.getAttribute("listaEquipamentos");
                     for(Object objEqui : listaEquipamentosBean){
                         EquipamentoBean equipamento = (EquipamentoBean) objEqui;
-                        comando = equipamento.getCodigoEquipamento();
+                        comando = ambiente.getCodigoAmbiente() + equipamento.getCodigoEquipamento();
                         if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())){
                             if (equipamento.getEstado().equals("L")){
-                               comando = "D";
+                               comando += "D";
                                operacao = "Desligar ";
                             }else{
-                                comando = "L";
+                                comando += "L";
                                 operacao = "Ligar ";
                             }
                             comando += equipamento.getPinoArduino();                       

@@ -1,6 +1,8 @@
 package model.beans;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,7 +17,7 @@ public class EventoBean  implements Serializable {
     @EmbeddedId
     private EventoIdBean id;
     @Temporal(TemporalType.DATE)
-    private Date diaEvento;
+    private Date dataEvento;
     @Temporal(TemporalType.TIME)
     private Date horaEvento;
 
@@ -27,12 +29,15 @@ public class EventoBean  implements Serializable {
         this.id = id;
     }
 
-    public Date getDiaEvento() {
-        return diaEvento;
+    public Date getDataEvento() {
+        return dataEvento;
     }
 
-    public void setDiaEvento(Date diaEvento) {
-        this.diaEvento = diaEvento;
+    public void setDataEvento(Date dataEvento) {
+        DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+        formatadorData.setLenient(false);
+        formatadorData.format(dataEvento);
+        this.dataEvento = dataEvento;
     }
 
     public Date getHoraEvento() {
@@ -40,6 +45,9 @@ public class EventoBean  implements Serializable {
     }
 
     public void setHoraEvento(Date horaEvento) {
+        SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
+        formatadorHora.setLenient(false);
+        formatadorHora.format(horaEvento);
         this.horaEvento = horaEvento;
     }
 }

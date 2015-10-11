@@ -17,8 +17,8 @@ import model.dao.EquipamentoMySQLDAO;
 import model.dao.FabricaMySQLDAO;
 import model.dao.MoradorMySQLDAO;
 
-@WebServlet(name = "ControleAcessoServlet", urlPatterns = {"/ControleAcessoServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "LoginAtualizaServlet", urlPatterns = {"/LoginAtualizaServlet"})
+public class LoginAtualizaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
         
         HttpSession sessao = request.getSession(true);
         sessao.setMaxInactiveInterval(120);
-        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("loginSSHouse");
+        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
         
         AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
         List listaAmbientesBean = ambienteMySQLDAO.listAmbienteBean();
@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
                     MoradorMySQLDAO moradorMySQLDAO = FabricaMySQLDAO.getMoradorMySQLDAO();
                     moradorBean = moradorMySQLDAO.getMoradorBean(login);
                     if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
-                        sessao.setAttribute("loginSSHouse",moradorBean);                        
+                        sessao.setAttribute("operadorSSHouse",moradorBean);                        
                         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
                         rd.forward(request,response);
                     }else {

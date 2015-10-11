@@ -4,14 +4,22 @@ import controller.Cliente;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.beans.AmbienteBean;
 import model.beans.EquipamentoBean;
+import model.beans.MoradorBean;
+import model.beans.OperacaoBean;
+import model.beans.OperacaoIdBean;
+import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
 import model.dao.FabricaMySQLDAO;
+import model.dao.OperacaoMySQLDAO;
 
 public class ClienteWebServlet extends HttpServlet {
 
@@ -30,21 +38,47 @@ public class ClienteWebServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession sessao = request.getSession(true);
+        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
         String retorno = null, operacao = null,
             comando = request.getParameter("comando");           
-            operacao = comando.substring(0, 1);
-        if (comando != null){            
-            Cliente cliente = new Cliente();
-            retorno = cliente.enviaComando(comando.substring(2));
-            if (retorno.equals(operacao)){
-                EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
-                EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(0, 2));
-                equipamentoBean.setEstado(inverteOperacao(operacao));
-                equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
-            }
+            operacao = comando.substring(4,5);
             
+        if (comando != null){
+            Cliente cliente = new Cliente();
+            retorno = cliente.enviaComando(comando.substring(4));
+            if (retorno.equals(operacao)){
+                AmbienteMySQLDAO ambienteMySQLDAO = FabricaMySQLDAO.getAmbienteMySQLDAO();
+                AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 2));
+                
+                EquipamentoMySQLDAO equipamentoMySQLDAO = FabricaMySQLDAO.getEquipamentoMySQLDAO();
+                EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(2, 4));
+                equipamentoBean.setEstado(operacao);
+                equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
+                
+                OperacaoIdBean operacaoIdBean = new OperacaoIdBean();
+                operacaoIdBean.setEquipamento(equipamentoBean);
+                operacaoIdBean.setMorador(moradorBean);                
+                OperacaoBean operacaoBean = new OperacaoBean();
+                operacaoBean.setId(operacaoIdBean);
+                operacaoBean.setDataOperacao(new Date());
+                operacaoBean.setHoraOperacao(new Date());                
+                String descricaoOperacao = equipamentoBean.getDescricaoEquipamento()
+                    + " " + ambienteBean.getDescricaoAmbiente();
+                if (operacao.equals("L")){
+                    descricaoOperacao += " LIGADO";                    
+                }else if (operacao.equals("D")){
+                    descricaoOperacao += " DESLIGADO";
+                } else{
+                    descricaoOperacao = "Comando não executado";
+                }
+                operacaoBean.setDescricaoOperacao(descricaoOperacao);                
+                OperacaoMySQLDAO operacaoMySQLDAO = FabricaMySQLDAO.getOperacaoMySQLDAO();
+                operacaoMySQLDAO.saveOperacaoBean(operacaoBean);
+            }          
         }
-        RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("LoginAtualizaServlet");
         rd.forward(request,response);
     }
     
@@ -82,16 +116,6 @@ public class ClienteWebServlet extends HttpServlet {
         } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
         }        
-    }
-    
-    private String inverteOperacao(String comando){
-        if (comando.equals("L")){
-            return "D";
-        }else if (comando.equals("D")) {
-            return "L";
-        }else{
-            return null;
-        }
     }
     
 }

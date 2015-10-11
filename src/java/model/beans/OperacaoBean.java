@@ -1,5 +1,7 @@
 package model.beans;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,10 +15,13 @@ public class OperacaoBean  implements java.io.Serializable {
     
     @EmbeddedId
     private OperacaoIdBean id;
+    
     @Temporal(TemporalType.DATE)
-    private Date diaOperacao;
+    private Date dataOperacao;
+    
     @Temporal(TemporalType.TIME)
-    private Date horaOpercao;
+    private Date horaOperacao;
+    private String descricaoOperacao;
 
     public OperacaoIdBean getId() {
         return id;
@@ -26,19 +31,33 @@ public class OperacaoBean  implements java.io.Serializable {
         this.id = id;
     }
 
-    public Date getDiaOperacao() {
-        return diaOperacao;
+    public Date getDataOperacao() {
+        return dataOperacao;
     }
 
-    public void setDiaOperacao(Date diaOperacao) {
-        this.diaOperacao = diaOperacao;
+    public void setDataOperacao(Date dataOperacao) {
+        DateFormat formatadorData = new SimpleDateFormat("dd/MM/yyyy");
+        formatadorData.setLenient(false);
+        formatadorData.format(dataOperacao);
+        this.dataOperacao = dataOperacao;
     }
 
-    public Date getHoraOpercao() {
-        return horaOpercao;
+    public Date getHoraOperacao() {
+        return horaOperacao;
     }
 
-    public void setHoraOpercao(Date horaOpercao) {
-        this.horaOpercao = horaOpercao;
-    }    
+    public void setHoraOperacao(Date horaOperacao) {
+        SimpleDateFormat formatadorHora = new SimpleDateFormat("HH:mm");
+        formatadorHora.setLenient(false);
+        formatadorHora.format(horaOperacao);
+        this.horaOperacao = horaOperacao;
+    }
+    
+    public String getDescricaoOperacao(){
+        return this.descricaoOperacao;
+    }
+    
+    public void setDescricaoOperacao(String descricaoOperacao){
+        this.descricaoOperacao = descricaoOperacao;
+    }
 }
