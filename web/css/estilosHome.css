@@ -15,7 +15,7 @@ body {
     font-style: normal;
     font-weight: normal;
     color: #333333;
-    background: #ffffff
+    background: #ffffff;
 }
 h1 , h2 {
     font-weight: lighter
@@ -33,6 +33,12 @@ header h1 {
     float: left;
     color: #fefefe;
     text-shadow: none
+}
+
+header p{
+    padding-top: 5px;
+    float:right;
+    color: #ffffff;
 }
 
 .slogan {
@@ -147,6 +153,7 @@ footer {
 }
 
 footer p {
+    display:none;
     text-align : center;
     color: #fefefe;
     padding: 2% 0
@@ -188,19 +195,37 @@ footer p a , footer p a:visited {
 @media all and (max-width:720px) {
     .main h1 {font-size:20px}
 }
-@media all and (max-width: 480px) {
-    header ,  nav , .main , .hnavbar , .hnavbar li ul ,  
-    footer  {
+@media all and (max-width: 480px) {    
+    header{        
+        width: 90% !important;
+        padding:10px 5% !important;;
+        display: block !important;
+    } 
+    
+    nav , .main , .hnavbar , 
+    .hnavbar li ul{
         width: 90% !important;
         display: block !important;
         padding:0 5% !important;
         margin: 0 auto !important;
+        background: #2e2e2e;
+    }
+    
+    footer p {
+        width: 90% !important;
+        display: block !important;
+        margin: 20px auto 0 auto !important;
+        background: #2e2e2e;
     }
     
     header h1 {
         float: none;
         font-size:18px;
         text-align: center
+    }
+    
+    header p{
+        display:none;
     }
     
     .slogan {
