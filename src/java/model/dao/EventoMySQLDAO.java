@@ -15,8 +15,8 @@ public class EventoMySQLDAO{
     public EventoBean getEventoBean(EventoIdBean id) {
         EventoBean evento = null;
         if(id != null){
+            session = FabricaSessoes.getSession();
             try{
-                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select a from EventoBean a "
                     + "where a.id.alarme.codigoAlarme = ? "
                     + "and a.id.equipamento.codigoEquipamento = ? ");

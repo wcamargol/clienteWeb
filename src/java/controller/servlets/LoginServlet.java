@@ -42,7 +42,6 @@ public class LoginServlet extends HttpServlet {
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
         
         boolean cinza = true;
-        System.out.println(cinza?"id=\"cinza\"":"");
         
         if(moradorBean == null){
             String login = null;

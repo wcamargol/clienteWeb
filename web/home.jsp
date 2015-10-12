@@ -34,6 +34,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
             </div>
             <div id="conteudo">
                 <%@include file="operacoes.jsp" %>
+                <%@include file="eventos.jsp" %>
             </div>
             <div id="rodape">
                 <p><a href="LogoffServlet">Sair</a></p>

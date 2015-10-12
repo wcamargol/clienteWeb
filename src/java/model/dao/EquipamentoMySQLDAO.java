@@ -11,8 +11,10 @@ public class EquipamentoMySQLDAO{
     private Session session;
     
     public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
+        
         EquipamentoBean equipamento = null;
         if(codigoEquipamento != null){
+            session = FabricaSessoes.getSession();
             try{
                 Query consulta = session.createQuery("select a from EquipamentoBean a where "
                     + "a.codigoEquipamento = '" + codigoEquipamento + "'");

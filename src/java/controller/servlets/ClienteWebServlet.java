@@ -18,7 +18,6 @@ import model.beans.OperacaoBean;
 import model.beans.OperacaoIdBean;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
-import model.dao.FabricaSessoes;
 import model.dao.OperacaoMySQLDAO;
 
 public class ClienteWebServlet extends HttpServlet {
@@ -47,10 +46,10 @@ public class ClienteWebServlet extends HttpServlet {
             MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
             String retorno = null, operacao = null,
             comando = request.getParameter("comando");           
-            operacao = comando.substring(4,5);            
+            operacao = comando.substring(6,7);    
             if (comando != null){
                 Cliente cliente = new Cliente();
-                retorno = cliente.enviaComando(comando.substring(4));
+                retorno = cliente.enviaComando(comando.substring(6));
                 if (retorno.equals(operacao)){
                     salvaOperacao(operacao, comando, moradorBean);
                 }          
@@ -62,10 +61,10 @@ public class ClienteWebServlet extends HttpServlet {
     
     public void salvaOperacao(String operacao, String comando, MoradorBean moradorBean){        
         AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
-        AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 2));
-
+        AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 4));
         EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
-        EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(2, 4));
+        EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(4, 6));
+       
         equipamentoBean.setEstado(operacao);
         equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
 

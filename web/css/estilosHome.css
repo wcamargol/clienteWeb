@@ -155,8 +155,19 @@ nav {
 
 .tabela .coluna1{
     width:15%;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
+}
+
+.tabela .tituloTabela .coluna11{
+    width:30%;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.tabela .coluna11{
+    text-align: left;
+    width:30%
 }
 
 .tabela .coluna2{
@@ -167,8 +178,17 @@ nav {
     width:15%;
 }
 
+.tabela .coluna4{
+    width:55%;
+}
+
 .tabela .conteudoTabela .coluna4{
     width:55%;
+    text-align: left;
+}
+
+.tabela .conteudoTabela .coluna41{
+    width:40%;
     text-align: left;
 }
 
@@ -224,10 +244,11 @@ footer p a , footer p a:visited {
     }
 }
 
-@media all and (max-width:850px) {
+@media all and (max-width:870px) {
     .tabela{
-        width:100%;
+        width:60%;
         margin-top:30px;
+        margin-left: 20%;
     }
 }
 
@@ -246,13 +267,14 @@ footer p a , footer p a:visited {
 }
 
 @media all and (max-width:720px) {
-    table tr td{
-        text-align: center;
-        padding-left: 5px;
-        padding-right: 5px;
-        font-size: 12px;  
-    }    
+    .tabela{
+        width:60%;
+        margin-top:30px;
+        margin-left: 20%;
+    }
+    
 }
+
 
 @media all and (max-width: 480px) {
     header{        
@@ -314,17 +336,5 @@ footer p a , footer p a:visited {
     }
     .hnavbar li ul {
         z-index: 10
-    }
-    
-    .image4{
-        display: none;
-    }
-    
-    .image3 { 
-        float: none;
-        display: block;
-        max-width: 96%;
-        margin: 2% auto;
-        clear: both
     }
 }

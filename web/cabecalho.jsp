@@ -19,7 +19,7 @@
                         List listaAmbientesBean = (List) request.getAttribute("listaAmbientes");
                         String strAmb, comando, operacao;
                         for(Object objAmb : listaAmbientesBean){
-                            AmbienteBean ambiente = (AmbienteBean) objAmb;                    
+                            AmbienteBean ambiente = (AmbienteBean) objAmb;
 %>
                         <li>
                             <a><%=ambiente.getDescricaoAmbiente()%></a>
@@ -29,7 +29,8 @@
                                 for(Object objEqui : listaEquipamentosBean){
                                     EquipamentoBean equipamento = (EquipamentoBean) objEqui;
                                     comando = ambiente.getCodigoAmbiente() + equipamento.getCodigoEquipamento();
-                                    if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())){
+                                    if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())
+                                        && Integer.parseInt(equipamento.getCodigoEquipamento()) < 80){
                                         if (equipamento.getEstado().equals("L")){
                                            comando += "D";
                                            operacao = "Desligar ";
@@ -49,6 +50,7 @@
                         </li>  
 <%                  
                         }
+                        
 %>
                     </ul>
                 </nav>

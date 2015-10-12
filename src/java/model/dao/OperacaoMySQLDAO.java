@@ -14,8 +14,8 @@ public class OperacaoMySQLDAO{
     public OperacaoBean getOperacaoBean(OperacaoIdBean id) {
         OperacaoBean evento = null;
         if(id != null){
+            session = FabricaSessoes.getSession();
             try{
-                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select a from OperacaoBean a "
                     + "where a.id.morador.login = ? "
                     + "and a.id.equipamento.codigoEquipamento = ? ");

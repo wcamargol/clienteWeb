@@ -13,8 +13,8 @@ public class MoradorMySQLDAO{
     public MoradorBean getMoradorBean(String login){
         MoradorBean morador = null;
         if (login != null){
+            session = FabricaSessoes.getSession();
             try{
-                session = FabricaSessoes.getSession();
                 Query consulta = session.createQuery("select m from MoradorBean "
                     + "m where m.login = '"+login+"'");
                 List l = consulta.list();

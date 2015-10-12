@@ -2,6 +2,7 @@
 package controller.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.beans.AmbienteBean;
+import model.beans.EquipamentoBean;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
 import model.dao.EventoMySQLDAO;
@@ -30,25 +33,46 @@ public class AtualizaServlet extends HttpServlet {
         throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //HttpSession sessao = request.getSession(true);
-        
-        AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
-        List listaAmbientesBean = ambienteMySQLDAO.listAmbienteBean();
-        request.setAttribute("listaAmbientes", listaAmbientesBean);
+                
+        //request.setAttribute("listaAmbientes", listaAmbientesBean);
         
         EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
         List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
         request.setAttribute("listaEquipamentos", listaEquipamentosBean);
         
+        AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
+        List listaAB = ambienteMySQLDAO.listAmbienteBean();
+        ArrayList listaAmbientesBean = new ArrayList();
+        for(Object o: listaAB){
+            AmbienteBean a = (AmbienteBean) o;
+            for(Object obj : listaEquipamentosBean){
+                EquipamentoBean e = (EquipamentoBean) obj;
+                if (a.getDescricaoAmbiente().equals(e.getAmbiente().getDescricaoAmbiente()) 
+                    && Integer.parseInt(e.getCodigoEquipamento()) < 80){
+                    if (!listaAmbientesBean.contains(a))
+                        listaAmbientesBean.add(o);
+                }
+            
+            }
+        }
+        List lista = listaAmbientesBean;
+        request.setAttribute("listaAmbientes", listaAmbientesBean);
+        
+        
         OperacaoMySQLDAO operacaoMySQLDAO = new OperacaoMySQLDAO();
         List listaOperacoesBean = operacaoMySQLDAO.listaOperacaoBean();
-        if (listaOperacoesBean != null){
+        if (!listaOperacoesBean.isEmpty()){
             request.setAttribute("listaOperacoes", listaOperacoesBean);
+        }else{
+            request.setAttribute("listaOperacoes", null);
         }
         
         EventoMySQLDAO eventoMySQLDAO = new EventoMySQLDAO();
         List listaEventosBean = eventoMySQLDAO.listEventoBean();
-        if (listaEventosBean != null){
+        if (!listaEventosBean.isEmpty()){
             request.setAttribute("listaEventos", listaEventosBean);
+        }else{
+            request.setAttribute("listaEventos", null);
         }
         
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");

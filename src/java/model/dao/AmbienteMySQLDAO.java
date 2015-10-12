@@ -18,8 +18,8 @@ public class AmbienteMySQLDAO {
     public AmbienteBean getAmbienteBean(String codigo){
         AmbienteBean ambiente = null;
         if(codigo != null){
-            try{
-                session = FabricaSessoes.getSession();
+            session = FabricaSessoes.getSession();
+            try{                
                 Query consulta = session.createQuery("select a from AmbienteBean a where "
                     + "a.codigoAmbiente = '"+codigo+"'");
                 List l = consulta.list();
