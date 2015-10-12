@@ -16,12 +16,7 @@
         <title>Login SSHouse</title>
     </head>
     <body onload="window.scrollTo(0, 1);">
-        <%   HttpSession sessao = request.getSession(true);
-            if (sessao.getAttribute("operadorSSHouse")!=null) {
-        %>
-            <jsp:forward page="LoginServlet"></jsp:forward>
-        <%
-        }else{ %>
+        
 	<div class="login">
             <div class="login-screen">
                 <div class="app-title">
@@ -48,6 +43,5 @@
                 </form>
             </div>
 	</div>
-       <%} %>
 </body>
 </html>

@@ -4,61 +4,57 @@
     Author     : lubuntu
 --%>
 
+<%@page import="model.beans.EventoBean"%>
 <%@page import="model.beans.OperacaoBean"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <div id=operacoes>
+
+                <div class="tabela">
 <%        
-            List listaOperacoesBean = (List) request.getAttribute("listaOperacoes");
+                    List listaOperacoesBean = (List) request.getAttribute("listaOperacoes");
+                    List listaEventosBean = (List) request.getAttribute("listaEventos");
+                    String data, nome;
+                    boolean cinza = false;
 %>  
-            <table>
-                <tr>
-                    <td>Usu&aacute;rio</td>
-                    <td>Data</td>
-                    <td>Hora</td>
-                    <td>Opera&ccedil;&atilde;o</td>
-                </tr>
-<%        
-                for(Object obj : listaOperacoesBean){
-                    //OperacaoBean operacaoBean = (OperacaoBean) obj;
+                    <table class="tituloTabela">                
+                        <tr>
+                            <td class="coluna1">Evento</td>
+                            <td class="coluna2">Data</td>
+                            <td class="coluna3">Hora</td>
+                        </tr>
+                    </table>
+                    <div class="conteudoTabela">
+                        <table>                    
+<%              
+                            if (listaEventosBean != null){
+                                for(Object obj : listaEventosBean){
+                                    EventoBean eventoBean = (EventoBean) obj;
+                                    data = eventoBean.getDataEvento().toString().substring(8)
+                                        +"/"+eventoBean.getDataEvento().toString().substring(5,7)
+                                        +"/"+eventoBean.getDataEvento().toString().substring(0,4);
 %>
-                <tr>
-                    
-                    <td><%=obj%></td>
-                </tr>
+                                    <tr>
+                                        <td class="coluna1"><%=eventoBean.getId().getAlarme().getDescricaoAlarme()%></td>
+                                        <td class="coluna2"><%=data%>teste</td>
+                                        <td class="coluna3"><%=eventoBean.getHoraEvento()%></td>
+                                    </tr>
 <%            
-                }    
+                                    cinza = !cinza;
+                                }
+                            } else {
+                                for(int i=0; i < 14;i++){                            
 %>
-            </table>
-        </div>
-        <div id="eventos">
-        <table>
-            <tr>
-                <td>Usu&aacute;rio</td>
-                <td>Data</td>
-                <td>Hora</td>
-                <td>Opera&ccedil;&atilde;o</td>
-            </tr>
-<%        
-           
-            for(Object obj : listaOperacoesBean){
-                OperacaoBean operacaoBean = (OperacaoBean) obj;
-                
-%>
-            <tr>
-                <td><%=operacaoBean.getId().getMorador().getLogin()%></td>
-                <td><%=operacaoBean.getHoraOperacao()%></td>
-            </tr>
+                                    <tr>
+                                        <td class="coluna1">teste</td>
+                                        <td class="coluna2">teste</td>
+                                        <td class="coluna3">teste</td>
+                                        <td class="coluna4">teste</td>
+                                    </tr>
 <%            
-            }    
+                                    cinza = !cinza;
+                                }                        
+                            }
 %>
-    </table>
-    </div>
-    </body>
-</html>
+                        </table>    
+                    </div>
+                </div>

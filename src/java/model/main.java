@@ -17,11 +17,9 @@ public class main {
         Iterator<List> i = lis.iterator();
         while (i.hasNext()){
             OperacaoBean operacao = (OperacaoBean) i.next();
-            System.out.println( " - " + operacao.getDataOperacao().toString().substring(8) + "/" +
-                      operacao.getDataOperacao().toString().substring(5,7) + "/"+
-                      operacao.getDataOperacao().toString().substring(0,4)
-            + " - " + operacao.getHoraOperacao()
-            + " - " + operacao.getDescricaoOperacao());
+            String nome = operacao.getId().getMorador().getNome();
+            nome = nome.substring(0, nome.indexOf(" ") + 1);
+            System.out.println(nome);
         }
     }       
 }

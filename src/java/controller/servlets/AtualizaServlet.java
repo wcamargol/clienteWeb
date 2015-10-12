@@ -9,11 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.EquipamentoMySQLDAO;
 import model.dao.EventoMySQLDAO;
-import model.dao.FabricaSessoes;
 import model.dao.OperacaoMySQLDAO;
 
 @WebServlet(name = "AtualizaServlet", urlPatterns = {"/AtualizaServlet"})

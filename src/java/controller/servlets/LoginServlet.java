@@ -1,6 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller.servlets;
 
-import model.Hash;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
@@ -10,10 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Hash;
 import model.beans.MoradorBean;
 import model.dao.MoradorMySQLDAO;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+/**
+ *
+ * @author lubuntu
+ */
+@WebServlet(name = "LogServlet", urlPatterns = {"/LogServlet"})
 public class LoginServlet extends HttpServlet {
 
     /**
@@ -24,42 +33,42 @@ public class LoginServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.security.NoSuchAlgorithmException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
-        
         HttpSession sessao = request.getSession(true);
-        sessao.setMaxInactiveInterval(120);
+        sessao.setMaxInactiveInterval(60);
         MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
         
+        boolean cinza = true;
+        System.out.println(cinza?"id=\"cinza\"":"");
+        
         if(moradorBean == null){
-            String login = request.getParameter("login");
-            String senha = request.getParameter("senha");
-            if (sessao.isNew()){
-                request.setAttribute("erro", "Sessão expirada.");
-            }else{
-                if (login != null && !login.equals("") && senha != null && !senha.equals("")){
-                    MoradorMySQLDAO moradorMySQLDAO = new MoradorMySQLDAO();
-                    moradorBean = moradorMySQLDAO.getMoradorBean(login);
-                    if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
-                        sessao.setAttribute("operadorSSHouse",moradorBean);                        
-                        RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
-                        rd.forward(request,response);
-                    }else {
-                        request.setAttribute("erro", "Login ou senha inválidos.");                    
-                    }  
-                }else{
-                    request.setAttribute("erro", "Preencha todos os campos");
-                }                
+            String login = null;
+            String senha = null;
+            if (!sessao.isNew()){
+                login = request.getParameter("login");
+                senha = request.getParameter("senha");
             }
-            
+            if (login != null && !login.equals("") && senha != null && !senha.equals("")){
+                MoradorMySQLDAO moradorMySQLDAO = new MoradorMySQLDAO();
+                moradorBean = moradorMySQLDAO.getMoradorBean(login);
+                if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
+                    sessao.setAttribute("operadorSSHouse",moradorBean);                        
+                    RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
+                    rd.forward(request,response);
+                }else {
+                    request.setAttribute("erro", "Login ou senha inválidos.");  
+                }  
+            }else if (!sessao.isNew()) {
+                request.setAttribute("erro", "Preencha todos os campos");
+            }
             RequestDispatcher rd = request.getRequestDispatcher("homeLogin.jsp");
-            rd.forward(request, response);
+            rd.forward(request, response);            
         }else{
             RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
-            rd.forward(request,response);
+            rd.forward(request, response);
         }
     }
 
@@ -77,9 +86,7 @@ public class LoginServlet extends HttpServlet {
         throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
+        } catch (NoSuchAlgorithmException ex) {}
     }
 
     /**
@@ -95,9 +102,7 @@ public class LoginServlet extends HttpServlet {
         throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-        }
+        } catch (NoSuchAlgorithmException ex) {}
     }
 
     /**

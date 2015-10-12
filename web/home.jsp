@@ -22,7 +22,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Free Liquid Web Template #001 - Responsive Web Design</title>
+        <title>SSHouse</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/estilosHome.css" type="text/css" >
