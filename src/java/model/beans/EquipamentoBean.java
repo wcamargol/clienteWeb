@@ -4,7 +4,6 @@ package model.beans;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;

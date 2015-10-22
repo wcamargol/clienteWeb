@@ -39,7 +39,8 @@ public class OperacaoMySQLDAO{
         List listaOperacoesBean = null;
         Query consulta = null;
         try{            
-            consulta = session.createQuery("from OperacaoBean");
+            consulta = session.createQuery("from OperacaoBean operacao order by "
+                + "operacao.dataOperacao desc, operacao.horaOperacao desc");
             listaOperacoesBean = consulta.list();
         }catch (HibernateException ex){
                 ex.printStackTrace();            

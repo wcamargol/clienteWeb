@@ -38,7 +38,8 @@ public class EventoMySQLDAO{
         List listaEventosBean = null;
         Query consulta = null;
         try{            
-            consulta = session.createQuery("from EventoBean");
+            consulta = session.createQuery("from EventoBean evento order by "
+                + "evento.dataEvento desc, evento.horaEvento desc");
             listaEventosBean = consulta.list();
         }catch (HibernateException ex){
                 ex.printStackTrace();            

@@ -44,10 +44,17 @@ public class ClienteWebServlet extends HttpServlet {
             rd.forward(request,response);
         }else{
             MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
-            String retorno = null, operacao = null,
-            comando = request.getParameter("comando");           
-            operacao = comando.substring(6,7);    
-            if (comando != null){
+            
+            String comando = request.getParameter("comando");
+            EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
+            EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(4, 6));
+            System.out.println(equipamentoBean.getEstado());
+            System.out.println(comando.substring(6,7));
+               
+            if (comando != null && 
+                !equipamentoBean.getEstado().equals(comando.substring(6,7))){
+                String retorno = null, operacao = null;
+                 operacao = comando.substring(6,7);
                 Cliente cliente = new Cliente();
                 retorno = cliente.enviaComando(comando.substring(6));
                 if (retorno.equals(operacao)){
