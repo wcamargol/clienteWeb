@@ -48,8 +48,6 @@ public class ClienteWebServlet extends HttpServlet {
             String comando = request.getParameter("comando");
             EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
             EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(4, 6));
-            System.out.println(equipamentoBean.getEstado());
-            System.out.println(comando.substring(6,7));
                
             if (comando != null && 
                 !equipamentoBean.getEstado().equals(comando.substring(6,7))){
