@@ -25,6 +25,8 @@ public class MoradorBean  implements Serializable {
     private String nome;
     @Temporal(TemporalType.DATE)
     private Date dataNascimento;
+    private String celular;
+    private String email;
     private String senha;
     @ManyToMany
     @JoinTable(name="Operacao", schema="SSHouse",
@@ -55,6 +57,22 @@ public class MoradorBean  implements Serializable {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+    
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getSenha() {
         return senha;
@@ -71,6 +89,4 @@ public class MoradorBean  implements Serializable {
     public void setEquipamento(Collection<EquipamentoBean> equipamento) {
         this.equipamento = equipamento;
     }
-    
-    
 }
