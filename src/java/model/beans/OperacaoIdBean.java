@@ -1,6 +1,5 @@
 package model.beans;
 
-import java.util.Date;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -16,7 +15,7 @@ public class OperacaoIdBean  implements java.io.Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "login")
     private MoradorBean morador;
-
+    
     public AtuadorBean getAtuador() {
         return atuador;
     }

@@ -47,7 +47,7 @@ public class AlarmeBean  implements Serializable {
 
     public void setSensor(Collection<SensorBean> sensor) {
         this.sensor = sensor;
-    }
+    }    
 }
 
 
