@@ -20,7 +20,7 @@ public class OperacaoMySQLDAO{
                     + "where a.id.morador.login = ? "
                     + "and a.id.equipamento.codigoEquipamento = ? ");
                  consulta.setString(0, id.getMorador().getLogin());
-                consulta.setString(1, id.getEquipamento().getCodigoEquipamento());
+                consulta.setString(1, id.getAtuador().getCodigoAtuador());
                 List l = consulta.list();
                 if (!l.isEmpty()){
                    evento = (OperacaoBean)l.get(0);

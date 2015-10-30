@@ -38,7 +38,7 @@
                                 <td class="coluna11"><%=eventoBean.getId().getAlarme().getDescricaoAlarme()%></td>
                                 <td class="coluna2"><%=dataE%></td>
                                 <td class="coluna3"><%=eventoBean.getHoraEvento()%></td>
-                                <td class="coluna41"><%=eventoBean.getId().getEquipamento().getAmbiente().getDescricaoAmbiente()%></td>
+                                <td class="coluna41"><%=eventoBean.getId().getSensor().getAmbiente().getDescricaoAmbiente()%></td>
                             </tr>
 <%            
                                     cinzaE = !cinzaE;

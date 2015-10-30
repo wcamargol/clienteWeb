@@ -1,62 +1,74 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.EventoBean;
-import model.beans.EventoIdBean;
+import model.beans.SensorBean;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class EventoMySQLDAO{
-    
+public class SensorMySQLDAO{
     private Session session;
     
-    public EventoBean getEventoBean(EventoIdBean id) {
-        EventoBean evento = null;
-        if(id != null){
+    public SensorBean getSensorBean(String codigoSensor){
+        
+        SensorBean sensor = null;
+        if(codigoSensor != null){
             session = FabricaSessoes.getSession();
             try{
-                Query consulta = session.createQuery("select a from EventoBean a "
-                    + "where a.id.alarme.codigoAlarme = ? "
-                    + "and a.id.equipamento.codigoEquipamento = ? ");
-                consulta.setString(0, id.getAlarme().getCodigoAlarme());
-                consulta.setString(1, id.getSensor().getCodigoSensor());
+                Query consulta = session.createQuery("select a from SensorBean a where "
+                    + "a.codigoSensor = '" + codigoSensor + "'");
                 List l = consulta.list();
                 if (!l.isEmpty()){
-                   evento = (EventoBean)l.get(0);
+                   sensor = (SensorBean)l.get(0);
                 }
             }catch (HibernateException ex){
                 ex.printStackTrace();
             }
         }
-        return evento;
+        return sensor;
     }
     
-    public List listEventoBean(){
+    public List listSensorBean(){
         session = FabricaSessoes.getSession();
-        List listaEventosBean = null;
+        List listaSensoresBean = null;
         Query consulta = null;
         try{            
-            consulta = session.createQuery("from EventoBean evento order by "
-                + "evento.dataEvento desc, evento.horaEvento desc");
-            listaEventosBean = consulta.list();
+            consulta = session.createQuery("from SensorBean");
+            listaSensoresBean = consulta.list();
         }catch (HibernateException ex){
                 ex.printStackTrace();            
         }finally{
             session.close();
         }
-        return listaEventosBean;
+        return listaSensoresBean;
     }
     
-    public boolean updateEventoBean(EventoBean evento) {
+    public boolean updateSensorBean(SensorBean sensor){
         boolean sucesso = false;
-        if(evento != null){
-            session = FabricaSessoes.getSession();
+        if(sensor != null){
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.update(evento);
+                session.update(sensor);
+                tx.commit();
+                sucesso = true;                
+            }catch(HibernateException ex){
+                ex.printStackTrace();
+                tx.rollback();
+            }finally{
+                session.close();
+            }
+        }
+        return sucesso;    
+    }
+    public boolean saveSensorBean(SensorBean sensor){
+        boolean sucesso = false;
+        if(sensor != null){
+            Transaction tx = null;
+            try{
+                tx = session.beginTransaction();
+                session.save(sensor);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){
@@ -68,36 +80,13 @@ public class EventoMySQLDAO{
         }
         return sucesso;            
     }
-
-    
-    public boolean saveEventoBean(EventoBean evento) {
+    public boolean deleteSensorBean(SensorBean sensor){
         boolean sucesso = false;
-        if(evento != null){
-            session = FabricaSessoes.getSession();
+        if(sensor != null){
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.save(evento);
-                tx.commit();
-                sucesso = true;                
-            }catch(HibernateException ex){
-                ex.printStackTrace();
-                tx.rollback();
-            }finally{
-                session.close();
-            }
-        }
-        return sucesso;   
-    }
-    
-    public boolean deleteEventoBean(EventoBean evento) {
-        boolean sucesso = false;
-        if(evento != null){
-            session = FabricaSessoes.getSession();
-            Transaction tx = null;
-            try{
-                tx = session.beginTransaction();
-                session.delete(evento);
+                session.delete(sensor);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){

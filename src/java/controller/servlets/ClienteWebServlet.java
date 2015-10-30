@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.AmbienteBean;
-import model.beans.EquipamentoBean;
+import model.beans.AtuadorBean;
 import model.beans.MoradorBean;
 import model.beans.OperacaoBean;
 import model.beans.OperacaoIdBean;
 import model.dao.AmbienteMySQLDAO;
-import model.dao.EquipamentoMySQLDAO;
+import model.dao.AtuadorMySQLDAO;
 import model.dao.OperacaoMySQLDAO;
 
 public class ClienteWebServlet extends HttpServlet {
@@ -46,11 +46,11 @@ public class ClienteWebServlet extends HttpServlet {
             MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
             
             String comando = request.getParameter("comando");
-            EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
-            EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(4, 6));
+            AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
+            AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
                
             if (comando != null && 
-                !equipamentoBean.getEstado().equals(comando.substring(6,7))){
+                !atuadorBean.getComando().equals(comando.substring(6,7))){
                 String retorno = null, operacao = null;
                  operacao = comando.substring(6,7);
                 Cliente cliente = new Cliente();
@@ -67,26 +67,26 @@ public class ClienteWebServlet extends HttpServlet {
     public void salvaOperacao(String operacao, String comando, MoradorBean moradorBean){        
         AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
         AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 4));
-        EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
-        EquipamentoBean equipamentoBean = equipamentoMySQLDAO.getEquipamentoBean(comando.substring(4, 6));
+        AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
+        AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
        
-        equipamentoBean.setEstado(operacao);
-        equipamentoMySQLDAO.updateEquipamentoBean(equipamentoBean);
+        atuadorBean.setComando(operacao);
+        atuadorMySQLDAO.updateAtuadorBean(atuadorBean);
 
         OperacaoIdBean operacaoIdBean = new OperacaoIdBean();
-        operacaoIdBean.setEquipamento(equipamentoBean);
+        operacaoIdBean.setAtuador(atuadorBean);
         operacaoIdBean.setMorador(moradorBean);                
         OperacaoBean operacaoBean = new OperacaoBean();
         operacaoBean.setId(operacaoIdBean);
         operacaoBean.setDataOperacao(new Date());
         operacaoBean.setHoraOperacao(new Date());                
-        String descricaoOperacao = equipamentoBean.getDescricaoEquipamento()
+        String descricaoOperacao = atuadorBean.getDescricaoAtuador()
             + " " + ambienteBean.getDescricaoAmbiente();
         if (operacao.equals("L")){
             descricaoOperacao += " LIGADO";                    
         }else if (operacao.equals("D")){
             descricaoOperacao += " DESLIGADO";
-        } else{
+        } else if (!operacao.equals("P")){
             descricaoOperacao = "Comando não executado";
         }
         operacaoBean.setDescricaoOperacao(descricaoOperacao);                

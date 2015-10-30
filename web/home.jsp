@@ -15,7 +15,7 @@ Esta página permitira o acesso ao sistema de automação Safe and Smart House
 --%>
 
 <%@page import="model.beans.MoradorBean"%>
-<%@page import="model.beans.EquipamentoBean"%>
+<%@page import="model.beans.AtuadorBean"%>
 <%@page import="model.beans.AmbienteBean"%>
 <%@page import="java.util.List"%>
 

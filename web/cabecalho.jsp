@@ -4,7 +4,7 @@
     Author     : lubuntu
 --%>
 
-<%@page import="model.beans.EquipamentoBean"%>
+<%@page import="model.beans.AtuadorBean"%>
 <%@page import="model.beans.AmbienteBean"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -25,23 +25,16 @@
                             <a><%=ambiente.getDescricaoAmbiente()%></a>
                                 <ul>
 <%                      
-                                List listaEquipamentosBean = (List) request.getAttribute("listaEquipamentos");
-                                for(Object objEqui : listaEquipamentosBean){
-                                    EquipamentoBean equipamento = (EquipamentoBean) objEqui;
-                                    comando = ambiente.getCodigoAmbiente() + equipamento.getCodigoEquipamento();
-                                    if (equipamento.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())
-                                        && Integer.parseInt(equipamento.getCodigoEquipamento()) < 80){
-                                        if (equipamento.getEstado().equals("L")){
-                                           comando += "D";
-                                           operacao = "Desligar ";
-                                        }else{
-                                            comando += "L";
-                                            operacao = "Ligar ";
-                                        }
-                                        comando += equipamento.getPinoArduino();                       
+                                List listaAtuadoresBean = (List) request.getAttribute("listaAtuadores");
+                                for(Object objAtuador : listaAtuadoresBean){
+                                    AtuadorBean atuador = (AtuadorBean) objAtuador;
+                                    comando = ambiente.getCodigoAmbiente() + atuador.getCodigoAtuador();
+                                    if (atuador.getAmbiente().getCodigoAmbiente().equals(ambiente.getCodigoAmbiente())
+                                        && atuador.getSensor() == null){
+                                        comando += atuador.getComando() + atuador.getPinoArduino();                       
 %>
                                     <li><a href="ClienteWebServlet?comando=<%=comando%>">
-                                            <%=operacao%><%=equipamento.getDescricaoEquipamento()%></a></li>
+                                            <%=atuador.getDescricaoAtuador()%></a></li>
 <%
                                     }
                                 }
@@ -49,8 +42,7 @@
                                </ul>
                         </li>  
 <%                  
-                        }
-                        
+                        }                        
 %>
                     </ul>
                 </nav>

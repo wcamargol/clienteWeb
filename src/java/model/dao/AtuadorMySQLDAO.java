@@ -1,56 +1,56 @@
 package model.dao;
 
 import java.util.List;
-import model.beans.EquipamentoBean;
+import model.beans.AtuadorBean;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-public class EquipamentoMySQLDAO{
+public class AtuadorMySQLDAO{
     private Session session;
     
-    public EquipamentoBean getEquipamentoBean(String codigoEquipamento){
+    public AtuadorBean getAtuadorBean(String codigoAtuador){
         
-        EquipamentoBean equipamento = null;
-        if(codigoEquipamento != null){
+        AtuadorBean atuador = null;
+        if(codigoAtuador != null){
             session = FabricaSessoes.getSession();
             try{
-                Query consulta = session.createQuery("select a from EquipamentoBean a where "
-                    + "a.codigoEquipamento = '" + codigoEquipamento + "'");
+                Query consulta = session.createQuery("select a from AtuadorBean a where "
+                    + "a.codigoAtuador = '" + codigoAtuador + "'");
                 List l = consulta.list();
                 if (!l.isEmpty()){
-                   equipamento = (EquipamentoBean)l.get(0);
+                   atuador = (AtuadorBean)l.get(0);
                 }
             }catch (HibernateException ex){
                 ex.printStackTrace();
             }
         }
-        return equipamento;
+        return atuador;
     }
     
-    public List listEquipamentoBean(){
+    public List listAtuadorBean(){
         session = FabricaSessoes.getSession();
-        List listaEquipamentosBean = null;
+        List listaAtuadoresBean = null;
         Query consulta = null;
         try{            
-            consulta = session.createQuery("from EquipamentoBean");
-            listaEquipamentosBean = consulta.list();
+            consulta = session.createQuery("from AtuadorBean");
+            listaAtuadoresBean = consulta.list();
         }catch (HibernateException ex){
                 ex.printStackTrace();            
         }finally{
             session.close();
         }
-        return listaEquipamentosBean;
+        return listaAtuadoresBean;
     }
     
-    public boolean updateEquipamentoBean(EquipamentoBean equipamento){
+    public boolean updateAtuadorBean(AtuadorBean atuador){
         boolean sucesso = false;
-        if(equipamento != null){
+        if(atuador != null){
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.update(equipamento);
+                session.update(atuador);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){
@@ -62,13 +62,13 @@ public class EquipamentoMySQLDAO{
         }
         return sucesso;    
     }
-    public boolean saveEquipamentoBean(EquipamentoBean equipamento){
+    public boolean saveAtuadorBean(AtuadorBean atuador){
         boolean sucesso = false;
-        if(equipamento != null){
+        if(atuador != null){
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.save(equipamento);
+                session.save(atuador);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){
@@ -80,13 +80,13 @@ public class EquipamentoMySQLDAO{
         }
         return sucesso;            
     }
-    public boolean deleteEquipamentoBean(EquipamentoBean equipamento){
+    public boolean deleteAtuadorBean(AtuadorBean atuador){
         boolean sucesso = false;
-        if(equipamento != null){
+        if(atuador != null){
             Transaction tx = null;
             try{
                 tx = session.beginTransaction();
-                session.delete(equipamento);
+                session.delete(atuador);
                 tx.commit();
                 sucesso = true;                
             }catch(HibernateException ex){

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.beans.AmbienteBean;
-import model.beans.EquipamentoBean;
+import model.beans.AtuadorBean;
 import model.dao.AmbienteMySQLDAO;
-import model.dao.EquipamentoMySQLDAO;
+import model.dao.AtuadorMySQLDAO;
 import model.dao.EventoMySQLDAO;
 import model.dao.OperacaoMySQLDAO;
 
@@ -36,23 +36,22 @@ public class AtualizaServlet extends HttpServlet {
                 
         //request.setAttribute("listaAmbientes", listaAmbientesBean);
         
-        EquipamentoMySQLDAO equipamentoMySQLDAO = new EquipamentoMySQLDAO();
-        List listaEquipamentosBean = equipamentoMySQLDAO.listEquipamentoBean();
-        request.setAttribute("listaEquipamentos", listaEquipamentosBean);
+        AtuadorMySQLDAO equipamentoMySQLDAO = new AtuadorMySQLDAO();
+        List listaAtuadoresBean = equipamentoMySQLDAO.listAtuadorBean();
+        request.setAttribute("listaAtuadores", listaAtuadoresBean);
         
         AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
         List listaAB = ambienteMySQLDAO.listAmbienteBean();
         ArrayList listaAmbientesBean = new ArrayList();
         for(Object o: listaAB){
             AmbienteBean a = (AmbienteBean) o;
-            for(Object obj : listaEquipamentosBean){
-                EquipamentoBean e = (EquipamentoBean) obj;
+            for(Object obj : listaAtuadoresBean){
+                AtuadorBean e = (AtuadorBean) obj;
                 if (a.getDescricaoAmbiente().equals(e.getAmbiente().getDescricaoAmbiente()) 
-                    && Integer.parseInt(e.getCodigoEquipamento()) < 80){
+                    && e.getSensor()==null){
                     if (!listaAmbientesBean.contains(a))
                         listaAmbientesBean.add(o);
-                }
-            
+                }            
             }
         }
         List lista = listaAmbientesBean;
