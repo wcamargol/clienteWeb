@@ -50,9 +50,9 @@ public class ClienteWebServlet extends HttpServlet {
             AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
                
             if (comando != null && 
-                !atuadorBean.getComando().equals(comando.substring(6,7))){
+                atuadorBean.getComando().equals(comando.substring(6,7))){
                 String retorno = null, operacao = null;
-                 operacao = comando.substring(6,7);
+                operacao = comando.substring(6,7);
                 Cliente cliente = new Cliente();
                 retorno = cliente.enviaComando(comando.substring(6));
                 if (retorno.equals(operacao)){
@@ -70,6 +70,11 @@ public class ClienteWebServlet extends HttpServlet {
         AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
         AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
        
+        if (operacao.equals("L")){
+            operacao = "D";
+        }else if (!operacao.equals("P")){
+           operacao = "L";
+        }
         atuadorBean.setComando(operacao);
         atuadorMySQLDAO.updateAtuadorBean(atuadorBean);
 
@@ -83,9 +88,9 @@ public class ClienteWebServlet extends HttpServlet {
         String descricaoOperacao = atuadorBean.getDescricaoAtuador()
             + " " + ambienteBean.getDescricaoAmbiente();
         if (operacao.equals("L")){
-            descricaoOperacao += " LIGADO";                    
+            descricaoOperacao += " DESLIGADO";                    
         }else if (operacao.equals("D")){
-            descricaoOperacao += " DESLIGADO";
+            descricaoOperacao += " LIGADO";
         } else if (!operacao.equals("P")){
             descricaoOperacao = "Comando não executado";
         }
