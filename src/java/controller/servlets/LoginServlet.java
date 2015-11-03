@@ -1,6 +1,7 @@
 
 package controller.servlets;
 
+import model.TrataComando;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;
@@ -30,12 +31,11 @@ public class LoginServlet extends HttpServlet {
         throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessao = request.getSession(true);
-        sessao.setMaxInactiveInterval(60);
-        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
+        Boolean logado = (Boolean) sessao.getAttribute("logado");
+        MoradorBean moradorBean = null;
         
-        boolean cinza = true;
         
-        if(moradorBean == null){
+        if((logado==null?true:!logado)){
             String login = null;
             String senha = null;
             if (!sessao.isNew()){
@@ -45,9 +45,11 @@ public class LoginServlet extends HttpServlet {
             if (login != null && !login.equals("") && senha != null && !senha.equals("")){
                 MoradorMySQLDAO moradorMySQLDAO = new MoradorMySQLDAO();
                 moradorBean = moradorMySQLDAO.getMoradorBean(login);
-                if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){
-                    sessao.setAttribute("operadorSSHouse",moradorBean);                        
-                    RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
+                if (moradorBean != null && moradorBean.getSenha().equals(new Hash().getMD5(senha))){  
+                    sessao.setAttribute("morador", moradorBean);
+                    sessao.setAttribute("logado",true);
+                    sessao.setAttribute("horaLogin",System.currentTimeMillis());
+                    RequestDispatcher rd = request.getRequestDispatcher("ClienteWebServlet");
                     rd.forward(request,response);
                 }else {
                     request.setAttribute("erro", "Login ou senha inválidos.");  
@@ -57,9 +59,6 @@ public class LoginServlet extends HttpServlet {
             }
             RequestDispatcher rd = request.getRequestDispatcher("homeLogin.jsp");
             rd.forward(request, response);            
-        }else{
-            RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
-            rd.forward(request, response);
         }
     }
 

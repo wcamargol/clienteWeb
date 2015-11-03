@@ -10,7 +10,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
                 <header id="heading">
                     <h1>Safe and Smart<span class="slogan">&nbsp;HOUSE</span></h1>
-                    <p><a href="LogoffServlet">Sair</a></p>
                 </header>            
                 <nav>
                     <ul class="hnavbar">

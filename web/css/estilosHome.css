@@ -208,13 +208,13 @@ table tr td{
     
 }
 
-#rodape {
+#rodape {    
     width: 100%;
     float: left;
     background: #2e2e2e
 }
 
-#rodape p {
+#rodape p {    
     display:none;
     text-align : center;
     padding: 2% 0;
@@ -300,6 +300,7 @@ footer p a , footer p a:visited {
         width: 90% !important;
         display: block !important;
         margin: 20px auto 0 auto !important;
+        color: #ffffff;
         background: #2e2e2e;
     }
     

@@ -1,6 +1,7 @@
 
 package controller.servlets;
 
+import model.TrataComando;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.beans.AmbienteBean;
 import model.beans.AtuadorBean;
+import model.beans.MoradorBean;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.AtuadorMySQLDAO;
 import model.dao.EventoMySQLDAO;
@@ -32,9 +35,7 @@ public class AtualizaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //HttpSession sessao = request.getSession(true);
-                
-        //request.setAttribute("listaAmbientes", listaAmbientesBean);
+        HttpSession sessao = request.getSession(true);
         
         AtuadorMySQLDAO equipamentoMySQLDAO = new AtuadorMySQLDAO();
         List listaAtuadoresBean = equipamentoMySQLDAO.listAtuadorBean();

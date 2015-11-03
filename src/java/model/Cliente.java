@@ -1,31 +1,34 @@
-package controller;
+package model;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
-public class Cliente implements Runnable{
+public class Cliente implements Callable{
 
     private Socket connSocket;
+    private String comando;
 
-    public Cliente(){
+    public Cliente(String comando){
         try {
             this.connSocket = new Socket("127.0.0.1", 12345);
+            this.comando = comando;
         } catch (IOException ex) {
             ex.printStackTrace();
             System.exit(1);
         }
     }
     
-    public String enviaComando(String str){
+    public String enviaComando(){
         Scanner entrada = null;
         PrintStream saida = null;
         String respostaServidor = null;
         try {
             entrada = new Scanner(this.connSocket.getInputStream());
             saida = new PrintStream(this.connSocket.getOutputStream());
-            saida.println(str);
+            saida.println(this.comando);
             saida.flush();
             while (entrada.hasNextLine()) {
                 respostaServidor = entrada.nextLine();
@@ -35,14 +38,11 @@ public class Cliente implements Runnable{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println(respostaServidor);
         return respostaServidor;
     } //fim do metodo esperaMsg
 
     @Override
-    public void run() {
-        while(true){
-            System.out.println(enviaComando("?"));            
-        }
+    public Object call() throws Exception{
+        return enviaComando();
     }
 }

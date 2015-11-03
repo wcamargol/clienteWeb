@@ -1,24 +1,18 @@
 package controller.servlets;
 
-import controller.Cliente;
+import model.TrataComando;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.beans.AmbienteBean;
 import model.beans.AtuadorBean;
 import model.beans.MoradorBean;
-import model.beans.OperacaoBean;
-import model.beans.OperacaoIdBean;
-import model.dao.AmbienteMySQLDAO;
 import model.dao.AtuadorMySQLDAO;
-import model.dao.OperacaoMySQLDAO;
 
 public class ClienteWebServlet extends HttpServlet {
 
@@ -37,66 +31,31 @@ public class ClienteWebServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, NoSuchAlgorithmException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession sessao = request.getSession(true);    
+        String comando = request.getParameter("comando");
+        if (comando != null){
+            sessao.setAttribute("comando",comando);
+        }
+        comando = (String) sessao.getAttribute("comando");
+        AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
+        AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6)); 
+        MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("morador");
+        Boolean logado = (Boolean) sessao.getAttribute("logado");        
         
-        HttpSession sessao = request.getSession(true);        
-        if (sessao.isNew()){
-            RequestDispatcher rd = request.getRequestDispatcher("LoginServlet");
+        if (logado != null && logado){ 
+            if ((System.currentTimeMillis() - (long) sessao.getAttribute("horaLogin"))/1000 > 60) {
+                logado = !logado;
+            }            
+        }
+        
+        if (atuadorBean.getRequerLogin() && (logado==null?true:!logado)){                
+            RequestDispatcher rd = request.getRequestDispatcher("homeLogin.jsp");
             rd.forward(request,response);
         }else{
-            MoradorBean moradorBean = (MoradorBean) sessao.getAttribute("operadorSSHouse");
-            
-            String comando = request.getParameter("comando");
-            AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
-            AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
-               
-            if (comando != null && 
-                atuadorBean.getComando().equals(comando.substring(6,7))){
-                String retorno = null, operacao = null;
-                operacao = comando.substring(6,7);
-                Cliente cliente = new Cliente();
-                retorno = cliente.enviaComando(comando.substring(6));
-                if (retorno.equals(operacao)){
-                    salvaOperacao(operacao, comando, moradorBean);
-                }          
-            }
+            new TrataComando().executa(comando, moradorBean);
             RequestDispatcher rd = request.getRequestDispatcher("AtualizaServlet");
             rd.forward(request,response);
-        }       
-    }
-    
-    public void salvaOperacao(String operacao, String comando, MoradorBean moradorBean){        
-        AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
-        AmbienteBean ambienteBean = ambienteMySQLDAO.getAmbienteBean(comando.substring(0, 4));
-        AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
-        AtuadorBean atuadorBean = atuadorMySQLDAO.getAtuadorBean(comando.substring(4, 6));
-       
-        if (operacao.equals("L")){
-            operacao = "D";
-        }else if (!operacao.equals("P")){
-           operacao = "L";
-        }
-        atuadorBean.setComando(operacao);
-        atuadorMySQLDAO.updateAtuadorBean(atuadorBean);
-
-        OperacaoIdBean operacaoIdBean = new OperacaoIdBean();
-        operacaoIdBean.setAtuador(atuadorBean);
-        operacaoIdBean.setMorador(moradorBean);                
-        OperacaoBean operacaoBean = new OperacaoBean();
-        operacaoBean.setId(operacaoIdBean);
-        operacaoBean.setDataOperacao(new Date());
-        operacaoBean.setHoraOperacao(new Date());                
-        String descricaoOperacao = atuadorBean.getDescricaoAtuador()
-            + " " + ambienteBean.getDescricaoAmbiente();
-        if (operacao.equals("L")){
-            descricaoOperacao += " DESLIGADO";                    
-        }else if (operacao.equals("D")){
-            descricaoOperacao += " LIGADO";
-        } else if (!operacao.equals("P")){
-            descricaoOperacao = "Comando não executado";
-        }
-        operacaoBean.setDescricaoOperacao(descricaoOperacao);                
-        OperacaoMySQLDAO operacaoMySQLDAO = new OperacaoMySQLDAO();
-        operacaoMySQLDAO.saveOperacaoBean(operacaoBean); 
+        }    
     }
     
     /**

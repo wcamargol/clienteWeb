@@ -15,7 +15,7 @@
         <link href="css/estilosHomeLogin.css" rel="stylesheet" type="text/css" />
         <title>Login SSHouse</title>
     </head>
-    <body onload="window.scrollTo(0, 1);">
+    <body onload="window.scrollTo(0, 100);">
         
 	<div class="login">
             <div class="login-screen">
@@ -38,8 +38,11 @@
                     <label class="login-field-icon fui-lock" for="senhaLogin"></label>
                     </div>
 
-                    <input class="btn" type="submit" name="btLogin" value="Entrar">                                
-                    <a class="login-link" href="#"></a>
+                    <input class="btn" type="submit" name="btLogin" value="Entrar"> 
+                    <div><br></div>
+                    <a href="AtualizaServlet">
+                        <input class="btn" type="button" name="btCancelar" value="Cancelar">
+                    </a>
                 </form>
             </div>
 	</div>

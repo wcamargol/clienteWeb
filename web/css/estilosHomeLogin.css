@@ -14,8 +14,6 @@ div h1 {
     color: #2e2e2e;
 }
 
-
-
 .slogan {
     font-size: 30px;
     font-style: oblique;
@@ -93,6 +91,9 @@ box-shadow: none;
   display: block;
   width: 250px;
   margin: 0 auto;
+}
+a{
+    text-decoration: none;
 }
 
 .btn:hover {
