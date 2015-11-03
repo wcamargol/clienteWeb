@@ -1,8 +1,5 @@
 <%-- 
-    Código adaptado do original disponível em http://codepen.io/Tushkiz/pen/xqfsy
-    Document   : homeLogin
-    Created on : 08/10/2015, 09:36:05
-    Author     : Walter Luiz de Camargo
+    Código adaptado do original disponível em http://codepen.io/Tushkiz/pen/xqfsy    
 --%>
 
 <%@page import="model.beans.MoradorBean"%>

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : operacoes
-    Created on : 12/10/2015, 19:44:53
-    Author     : lubuntu
---%>
-
 <%@page import="model.beans.OperacaoBean"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

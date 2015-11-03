@@ -1,7 +1,5 @@
-
 package controller.servlets;
 
-import model.TrataComando;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.beans.AmbienteBean;
 import model.beans.AtuadorBean;
-import model.beans.MoradorBean;
 import model.dao.AmbienteMySQLDAO;
 import model.dao.AtuadorMySQLDAO;
 import model.dao.EventoMySQLDAO;

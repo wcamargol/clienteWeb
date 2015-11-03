@@ -21,15 +21,15 @@ public class SensorBean  implements Serializable {
     private String codigoSensor;
     private String descricaoSensor;
     private String pinoArduino;
-    private Float limiteInfAlarme;
-    private Float limiteSupAlarme;   
+    private Float limiteInfAtuacao;
+    private Float limiteSupAtuacao;   
     
     @ManyToOne
     @JoinColumn(name="codigoAmbiente")
     private AmbienteBean ambiente;
     
     @ManyToOne
-    @JoinColumn(name="codigoAlarme")
+    @JoinColumn(name="codigoAtuacao")
     private AlarmeBean alarme;
     
     @OneToMany(mappedBy="sensor",fetch=FetchType.LAZY)
@@ -38,7 +38,7 @@ public class SensorBean  implements Serializable {
     @ManyToMany
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoSensor"),
-        inverseJoinColumns=@JoinColumn(name="codigoAlarme"))
+        inverseJoinColumns=@JoinColumn(name="codigoAtuacao"))
     private Collection<AlarmeBean> alarmes;
 
     public String getCodigoSensor() {
@@ -65,20 +65,20 @@ public class SensorBean  implements Serializable {
         this.pinoArduino = pinoArduino;
     }
 
-    public Float getLimiteInfAlarme() {
-        return limiteInfAlarme;
+    public Float getLimiteInfAtuacao() {
+        return limiteInfAtuacao;
     }
 
-    public void setLimiteInfAlarme(Float limiteInfAlarme) {
-        this.limiteInfAlarme = limiteInfAlarme;
+    public void setLimiteInfAtuacao(Float limiteInfAtuacao) {
+        this.limiteInfAtuacao = limiteInfAtuacao;
     }
 
-    public Float getLimiteSupAlarme() {
-        return limiteSupAlarme;
+    public Float getLimiteSupAtuacao() {
+        return limiteSupAtuacao;
     }
 
-    public void setLimiteSupAlarme(Float limiteSupAlarme) {
-        this.limiteSupAlarme = limiteSupAlarme;
+    public void setLimiteSupAtuacao(Float limiteSupAtuacao) {
+        this.limiteSupAtuacao = limiteSupAtuacao;
     }
 
     public AmbienteBean getAmbiente() {
@@ -89,11 +89,11 @@ public class SensorBean  implements Serializable {
         this.ambiente = ambiente;
     }
 
-    public AlarmeBean getAlarme() {
+    public AlarmeBean getAtuacao() {
         return alarme;
     }
 
-    public void setAlarme(AlarmeBean alarme) {
+    public void setAtuacao(AlarmeBean alarme) {
         this.alarme = alarme;
     }
 
@@ -105,11 +105,11 @@ public class SensorBean  implements Serializable {
         this.atuador = atuador;
     }
 
-    public Collection<AlarmeBean> getAlarmes() {
+    public Collection<AlarmeBean> getAtuacaos() {
         return alarmes;
     }
 
-    public void setAlarmes(Collection<AlarmeBean> alarmes) {
+    public void setAtuacaos(Collection<AlarmeBean> alarmes) {
         this.alarmes = alarmes;
     }
 }

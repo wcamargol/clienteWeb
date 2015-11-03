@@ -1,17 +1,6 @@
 <%--
-********************************************************************************
-
-    Document   : home
-    Created on : 09/09/2015, 06:46:55
-    Author     : Walter Luiz de Camargo - 434094
-
-********************************************************************************
-
 Código adaptado do original disponível em http://www.freeliquidtemplates.com/001.zip/ e adaptado 
 para jsp.
-
-Esta página permitira o acesso ao sistema de automação Safe and Smart House
-
 --%>
 
 <%@page import="model.beans.MoradorBean"%>

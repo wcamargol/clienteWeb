@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Operacoes
-    Created on : 11/10/2015, 11:05:54
-    Author     : lubuntu
---%>
-
 <%@page import="model.beans.EventoBean"%>
 <%@page import="model.beans.OperacaoBean"%>
 <%@page import="java.util.List"%>

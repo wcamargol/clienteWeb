@@ -1,7 +1,5 @@
-
 package controller.servlets;
 
-import model.TrataComando;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.RequestDispatcher;

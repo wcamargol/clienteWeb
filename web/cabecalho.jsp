@@ -1,9 +1,3 @@
-<%-- 
-    Document   : cabecalho
-    Created on : 11/10/2015, 12:37:49
-    Author     : lubuntu
---%>
-
 <%@page import="model.beans.AtuadorBean"%>
 <%@page import="model.beans.AmbienteBean"%>
 <%@page import="java.util.List"%>
