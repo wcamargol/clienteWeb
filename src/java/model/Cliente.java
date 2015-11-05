@@ -32,14 +32,14 @@ public class Cliente implements Callable{
             saida.flush();
             while (entrada.hasNextLine()) {
                 respostaServidor = entrada.nextLine();
-            } //fim do while
+            }
             entrada.close();
             saida.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return respostaServidor;
-    } //fim do metodo esperaMsg
+    }
 
     @Override
     public Object call() throws Exception{

@@ -34,20 +34,20 @@ public class AtualizaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessao = request.getSession(true);
         
-        AtuadorMySQLDAO equipamentoMySQLDAO = new AtuadorMySQLDAO();
-        List listaAtuadoresBean = equipamentoMySQLDAO.listAtuadorBean();
+        AtuadorMySQLDAO atuadorMySQLDAO = new AtuadorMySQLDAO();
+        List listaAtuadoresBean = atuadorMySQLDAO.listAtuadorBean();
         request.setAttribute("listaAtuadores", listaAtuadoresBean);
         
         AmbienteMySQLDAO ambienteMySQLDAO = new AmbienteMySQLDAO();
-        List listaAB = ambienteMySQLDAO.listAmbienteBean();
+        List listaAmbienteBean = ambienteMySQLDAO.listAmbienteBean();
         ArrayList listaAmbientesBean = new ArrayList();
-        for(Object o: listaAB){
-            AmbienteBean a = (AmbienteBean) o;
+        for(Object o: listaAmbienteBean){
+            AmbienteBean ambienteBean = (AmbienteBean) o;
             for(Object obj : listaAtuadoresBean){
-                AtuadorBean e = (AtuadorBean) obj;
-                if (a.getDescricaoAmbiente().equals(e.getAmbiente().getDescricaoAmbiente()) 
-                    && e.getSensor()==null){
-                    if (!listaAmbientesBean.contains(a))
+                AtuadorBean atuadorBean = (AtuadorBean) obj;
+                if (ambienteBean.getDescricaoAmbiente().equals(atuadorBean.getAmbiente().getDescricaoAmbiente()) 
+                    && atuadorBean.getSensor()==null){
+                    if (!listaAmbientesBean.contains(ambienteBean))
                         listaAmbientesBean.add(o);
                 }            
             }

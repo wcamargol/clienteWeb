@@ -47,8 +47,7 @@ public class TrataComando {
         operacaoBean.setId(operacaoIdBean);
         operacaoBean.setDataOperacao(new Date());
         operacaoBean.setHoraOperacao(new Date());                
-        String descricaoOperacao = this.atuadorBean.getDescricaoAtuador()
-            + " " + ambienteBean.getDescricaoAmbiente()
+        String descricaoOperacao = ambienteBean.getDescricaoAmbiente()
             + " " + this.atuadorBean.getDescricaoAtuador();
         if (operacao.equals("L")){
             descricaoOperacao += " DESLIGADO";                    

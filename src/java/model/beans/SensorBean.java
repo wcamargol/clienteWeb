@@ -29,7 +29,7 @@ public class SensorBean  implements Serializable {
     private AmbienteBean ambiente;
     
     @ManyToOne
-    @JoinColumn(name="codigoAtuacao")
+    @JoinColumn(name="codigoAlarme")
     private AlarmeBean alarme;
     
     @OneToMany(mappedBy="sensor",fetch=FetchType.LAZY)
