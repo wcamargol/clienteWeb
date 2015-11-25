@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +20,6 @@ public class EventoBean  implements Serializable {
     @ManyToOne
     @JoinColumn(name = "codigoSensor")
     private SensorBean sensor;
-    //private EventoIdBean id;
     
     @Id
     @ManyToOne
@@ -37,14 +34,6 @@ public class EventoBean  implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date horaEvento;
 
-    /*public EventoIdBean getId() {
-        return id;
-    }
-
-    public void setId(EventoIdBean id) {
-        this.id = id;
-    }*/
-    
     public SensorBean getSensor() {
         return sensor;
     }
