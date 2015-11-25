@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,11 +33,12 @@ public class SensorBean  implements Serializable {
     @OneToMany(mappedBy="sensor",fetch=FetchType.LAZY)
     private Collection<AtuadorBean> atuador;
     
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(name="Evento", schema="SSHouse",
         joinColumns=@JoinColumn(name="codigoSensor"),
-        inverseJoinColumns=@JoinColumn(name="codigoAtuacao"))
-    private Collection<AlarmeBean> alarmes;
+        inverseJoinColumns=@JoinColumn(name="codigoAtuacao"))*/
+    @OneToMany(mappedBy="sensor",fetch=FetchType.LAZY)
+    private Collection<EventoBean> eventos;
 
     public String getCodigoSensor() {
         return codigoSensor;
@@ -105,11 +104,11 @@ public class SensorBean  implements Serializable {
         this.atuador = atuador;
     }
 
-    public Collection<AlarmeBean> getAtuacaos() {
-        return alarmes;
+    public Collection<EventoBean> getAtuacaos() {
+        return eventos;
     }
 
-    public void setAtuacaos(Collection<AlarmeBean> alarmes) {
-        this.alarmes = alarmes;
+    public void setAtuacaos(Collection<EventoBean> eventos) {
+        this.eventos = eventos;
     }
 }
